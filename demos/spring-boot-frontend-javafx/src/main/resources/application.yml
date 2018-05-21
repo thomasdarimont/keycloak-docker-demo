@@ -1,0 +1,17 @@
+javafx:
+    title: Spring Boot Java FX JPA Demo
+    appicons:
+        - /spring-boot-icon.png
+    stage:
+        width: 640 # defaults to the size of the scene
+        height: 480
+        resizable: true
+        style: DECORATED # see: javafx.stage.StageStyle
+
+#We don't need JMX here - disabling it allows for faster startup
+spring:
+  jmx:
+    enabled: false
+
+todo-backend:
+  server: http://apps.tdlabs.local:20000

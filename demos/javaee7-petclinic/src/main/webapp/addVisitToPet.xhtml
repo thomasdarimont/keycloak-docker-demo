@@ -1,0 +1,67 @@
+<ui:composition template="./template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">>
+
+        <ui:define name="content">
+            <h2 id="">#{msg.addVisit}</h2>
+            <h:form id="addVisitForm">
+                <h4>#{msg.pet}</h4>
+                <h:panelGrid id="grid" columns="4" styleClass="table table-striped">
+
+                    <h:outputText value="#{msg.name}" />
+                    <h:outputText value="#{msg.birthdate}" />
+                    <h:outputText value="#{msg.petType}" />
+                    <h:outputText value="#{msg.owner}" />
+
+                    <h:outputText id="petName" value="#{ownerController.pet.name}" />
+                    <h:outputText id="petBirthDate" value="#{ownerController.pet.birthDate}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                    <h:outputText id="petType" value="#{ownerController.pet.type.name}" />
+                    <h:panelGroup>
+                        <h:outputText id="ownerFirstName" value="#{ownerController.pet.owner.firstName}" />&#160;
+                        <h:outputText id="ownerLastName" value="#{ownerController.pet.owner.lastName}" />
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                <h:panelGroup>
+                    <h:messages id="messages" layout="block" errorStyle="color: red"/>
+                </h:panelGroup>
+
+                <h:panelGrid id="grid2" columns="2" >
+                    <h:outputLabel value="#{msg.date}" for="visitDate" />
+                    <rich:calendar id="visitDate" locale="#{language.localeCode}"
+                                   value="#{ownerController.visit.date}"/>
+                    <h:outputLabel value="#{msg.description}" for="visitDescription" />
+                    <h:inputText id="visitDescription" styleClass="form-control"
+                                 value="#{ownerController.visit.description}" />
+                    <h:commandButton id="save" action="#{ownerController.saveVisit}" value="#{msg.save}" />
+                </h:panelGrid>
+
+                <h4>#{msg.previousVisits}</h4>
+                <h:dataTable id="previousVisitsTable" value="#{ownerController.pet.visits}" var="petsVisit" styleClass="table table-striped">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msg.date}"/>
+                        </f:facet>
+                        <h:outputText id="date" value="#{petsVisit.date}">
+                            <f:convertDateTime type="date" dateStyle="medium"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msg.description}"/>
+                        </f:facet>
+                        <h:outputText id="description" value="#{petsVisit.description}"/>
+                    </h:column>
+                </h:dataTable>
+
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<module xmlns="urn:jboss:module:1.1" name="de.tdlabs.keycloak.ext.jms-event-forwarder">
+
+    <resources>
+        <resource-root path="jms-event-forwarder.jar"/>
+    </resources>
+
+    <dependencies>
+        <module name="org.keycloak.keycloak-common"/>
+        <module name="org.keycloak.keycloak-core"/>
+        <module name="org.keycloak.keycloak-server-spi"/>
+        <module name="org.keycloak.keycloak-server-spi-private"/>
+        <module name="org.jboss.logging"/>
+        <module name="javax.api"/>
+        <module name="javax.jms.api"/>
+        <module name="javax.transaction.api"/>
+        <module name="com.fasterxml.jackson.core.jackson-core"/>
+        <module name="com.fasterxml.jackson.core.jackson-annotations"/>
+        <module name="com.fasterxml.jackson.core.jackson-databind"/>
+    </dependencies>
+</module>

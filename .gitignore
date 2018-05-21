@@ -1,0 +1,10 @@
+idm-system/data/
+*.class
+*.iml
+*.project
+*.classpath
+*.settings/
+target/
+
+.idea/
+*.iml

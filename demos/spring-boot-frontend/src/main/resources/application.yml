@@ -1,0 +1,17 @@
+server:
+  port: 20001
+
+keycloak:
+  realm: acme
+  auth-server-url: http://sso.tdlabs.local:8899/u/auth
+  resource: app-frontend-springboot
+  credentials:
+     secret: 4822a740-20b9-4ff7-bbed-e664f4a70eb6
+  ssl-required: external
+  principal-attribute: preferred_username
+  use-resource-role-mappings: true
+  token-minimum-time-to-live: 30
+
+
+todo-backend:
+  server: http://apps.tdlabs.local:20000

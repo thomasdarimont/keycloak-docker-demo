@@ -1,0 +1,75 @@
+{
+  "extractors": [
+    {
+      "title": "Extract login event type",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "type",
+      "extractor_config": {
+        "regex_value": "type=([^,]+)"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Extract IDM UserId",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "userId",
+      "extractor_config": {
+        "regex_value": "userId=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Extract RealmId",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "full_message",
+      "target_field": "realmId",
+      "extractor_config": {
+        "regex_value": "realmId=(\\w+)"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Extract ClientId",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "full_message",
+      "target_field": "clientId",
+      "extractor_config": {
+        "regex_value": "clientId=(\\w+)"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Extract IDM Username",
+      "extractor_type": "regex",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "full_message",
+      "target_field": "username",
+      "extractor_config": {
+        "regex_value": "username=(\\w+)"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    }
+  ],
+  "version": "2.2.0-SNAPSHOT"
+}

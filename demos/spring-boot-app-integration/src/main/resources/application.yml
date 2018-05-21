@@ -1,0 +1,15 @@
+server:
+  port: 30000
+security:
+  user:
+    password: dev
+    
+demo:
+  authServerUrl: http://sso.tdlabs.local:8899/u/auth
+  oauth2:
+    clientId: app-thirdparty
+    clientSecret: e6152257-d856-4f72-8530-bddd1179d112
+    authEndpoint: ${demo.authServerUrl}/realms/acme/protocol/openid-connect/auth
+    tokenEndpoint: ${demo.authServerUrl}/realms/acme/protocol/openid-connect/token
+    jwksEndpoint: ${demo.authServerUrl}/realms/acme/protocol/openid-connect/certs
+    redirectUri: http://thirdparty.local:30000/connect

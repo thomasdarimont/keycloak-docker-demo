@@ -1,0 +1,10 @@
+{
+  "realm": "acme",
+  "auth-server-url": "http://sso.tdlabs.local:8899/u/auth",
+  "ssl-required": "external",
+  "resource": "app-javaee-petclinic",
+  "credentials": {
+    "secret": "e08169c8-0dea-4a75-83a4-f9e9e9bfb961"
+  },
+  "use-resource-role-mappings": true
+}

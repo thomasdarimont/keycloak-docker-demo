@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>de.tdlabs.keycloak</groupId>
+   <artifactId>jms-event-forwarder</artifactId>
+   <version>1.0.0.BUILD-SNAPSHOT</version>
+
+   <properties>
+      <jboss-jms-spec.version>1.0.0.Final</jboss-jms-spec.version>
+      <keycloak.version>3.0.0.CR1</keycloak.version>
+      <lombok.version>1.16.14</lombok.version>
+
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>
+
+   <dependencies>
+      <dependency>
+         <groupId>org.projectlombok</groupId>
+         <artifactId>lombok</artifactId>
+         <version>${lombok.version}</version>
+         <optional>true</optional>
+      </dependency>
+
+      <dependency>
+         <groupId>org.keycloak</groupId>
+         <artifactId>keycloak-server-spi-private</artifactId>
+         <version>${keycloak.version}</version>
+         <scope>provided</scope>
+      </dependency>
+
+    <dependency>
+         <groupId>org.keycloak</groupId>
+         <artifactId>keycloak-server-spi</artifactId>
+         <version>${keycloak.version}</version>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.keycloak</groupId>
+         <artifactId>keycloak-services</artifactId>
+         <version>${keycloak.version}</version>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.jboss.spec.javax.jms</groupId>
+         <artifactId>jboss-jms-api_2.0_spec</artifactId>
+         <version>${jboss-jms-spec.version}</version>
+         <scope>provided</scope>
+      </dependency>
+   </dependencies>
+
+   <repositories>
+      <!-- for org.jboss.web:jbossweb -->
+      <repository>
+         <id>jboss</id>
+         <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+</project>

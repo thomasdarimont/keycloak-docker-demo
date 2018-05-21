@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<f:view locale="#{language.localeCode}">
+<f:loadBundle basename="messages" var="msg" />
+<h:head>
+    <title>Java EE 7 Petclinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap -->
+    <link href="webjars/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="webjars/bootstrap/3.0.3/css/bootstrap-theme.min.css" />
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="webjars/jquery/1.9.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .nav-justified {
+            background-color: #dddad2;
+            border: 1px solid #c4c0c9;
+            /* border-radius: 5px; */
+        }
+        .nav-justified > li > a {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-bottom: 0;
+            font-weight: bold;
+            color: #777;
+            text-align: center;
+            background-color: #dddad2; /* Old browsers */
+            background-image:    -moz-linear-gradient(top, #dddad2 0%, #d4cfc7 100%); /* FF3.6+ */
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dddad2), color-stop(100%,#d4cfc7)); /* Chrome,Safari4+ */
+            background-image: -webkit-linear-gradient(top, #dddad2 0%,#d4cfc7 100%); /* Chrome 10+,Safari 5.1+ */
+            background-image:      -o-linear-gradient(top, #dddad2 0%,#d4cfc7 100%); /* Opera 11.10+ */
+            background-image:         linear-gradient(top, #dddad2 0%,#d4cfc7 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddad2', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+            background-repeat: repeat-x; /* Repeat the gradient */
+            border-bottom: 1px solid #c4c0c9;
+        }
+        .nav-justified > .active > a,
+        .nav-justified > .active > a:hover,
+        .nav-justified > .active > a:focus {
+            background-color: #dddad2;
+            background-image: none;
+            box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+        }
+        .nav-justified > li:first-child > a {
+            /* border-radius: 5px 5px 0 0; */
+        }
+        .nav-justified > li:last-child > a {
+            border-bottom: 0;
+            /* border-radius: 0 0 5px 5px;  */
+        }
+
+        @media (min-width: 768px) {
+            .nav-justified {
+                max-height: 52px;
+            }
+            .nav-justified > li > a {
+                border-right: 1px solid #c4c0c9;
+                border-left: 1px solid #c4c0c9;
+            }
+            .nav-justified > li:first-child > a {
+                border-left: 0;
+                /* border-radius: 5px 0 0 5px; */
+            }
+            .nav-justified > li:last-child > a {
+                border-right: 0;
+                /* border-radius: 0 5px 5px 0; */
+            }
+        }
+
+        /* Responsive: Portrait tablets and up */
+        @media screen and (min-width: 768px) {
+            /* Remove the padding we set earlier */
+            .masthead {
+                padding-right: 0;
+                padding-left: 0;
+            }
+        }
+    </style>
+</h:head>
+<h:body>
+<div class="container">
+    <h2><h:outputText value="Java EE 7 Petclinic"/></h2>
+
+ <div>
+ <!-- Begin Keycloak Auth information -->
+    <div>User: <span>#{keycloak.username}</span></div>
+    <div>User ID: <span>#{keycloak.userId}</span></div>
+    <div>User Full Name: <span>#{keycloak.userDisplayName}</span></div>
+    <div>Client Roles: <span>#{keycloak.roles}</span></div>
+    <div>Realm Roles: <span>#{keycloak.realmRoles}</span></div>
+    <div>Sibling Client Roles:<span>#{keycloak.siblingRoles}</span></div>
+    <div>User Custom Attributes: <span>#{keycloak.customAttributes}</span></div>
+    <ul>
+        <li><a href="#{keycloak.accountUri}">account</a></li>
+        <li>
+            <h:form>
+            <h:commandLink id="logoutLink" value="Logout" action="#{keycloak.logout}"/>
+            </h:form>
+        </li>
+    </ul>
+<!-- End Keycloak Auth information -->
+</div>
+
+        <div class="masthead">
+            <ul class="nav nav-justified">
+                <li><a href="./"><span class="glyphicon glyphicon-home"></span> #{msg.home}</a></li>
+                <li><a href="findOwners.jsf"><span class="glyphicon glyphicon-search"></span> #{msg.findOwners}</a></li>
+                <li><a href="vets.jsf"><span class="glyphicon glyphicon-search"></span> #{msg.veterinarians}</a></li>
+                <li><a href="specialties.jsf"><span class="glyphicon glyphicon-th-list"></span> #{msg.specialties}</a></li>
+                <li><a href="petTypes.jsf"><span class="glyphicon glyphicon-th-list"></span> #{msg.petTypes}</a></li>
+                <li><a href="#" title="not available yet. Work in progress!!"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
+            </ul>
+        </div>
+
+
+    <ui:insert name="content">Main Content</ui:insert>
+
+    <br />
+    <br />
+    <div style="float: left">
+    © 2014 Thomas Wöhlke
+    </div>
+    <div  style="float: right">
+        <h:form>
+            <span class="glyphicon glyphicon-exclamation-sign"></span>#{msg.language}:
+            <h:selectOneMenu value="#{language.localeCode}" onchange="submit()" valueChangeListener="#{language.countryLocaleCodeChanged}">
+                <f:selectItems value="#{language.countriesInMap}" />
+            </h:selectOneMenu>
+        </h:form>
+    </div>
+</div>
+</h:body>
+</f:view>
+</html>

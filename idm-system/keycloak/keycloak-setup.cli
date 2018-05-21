@@ -1,0 +1,125 @@
+echo using ${env.JBOSS_HOME}/standalone/configuration/standalone-ha.xml
+
+embed-server --server-config=standalone-ha.xml --std-out=echo
+
+echo SETUP: Begin Keycloak configuration...
+
+echo SETUP: Remove Wildfly and Undertow response headers
+#/subsystem=undertow/server=default-server/host=default-host/filter-ref=server-header:remove
+#/subsystem=undertow/server=default-server/host=default-host/filter-ref=x-powered-by-header:remove
+#/subsystem=undertow/configuration=filter/response-header=server-header:remove
+#/subsystem=undertow/configuration=filter/response-header=x-powered-by-header:remove
+
+echo SETUP: Gets rid of WARN WFLYTX0013
+# Gets rid of WARN WFLYTX0013: Node identifier property is set to the default value. Please make sure it is unique.
+/subsystem=transactions:write-attribute(name=node-identifier,value="${jboss.node.name}")
+
+
+echo SETUP: Configure logging
+/subsystem=logging/console-handler=CONSOLE:change-log-level(level=ALL)
+
+echo SETUP: Add GELF logging 
+/subsystem=logging/custom-handler=GELF/:add(module=biz.paluch.logging, class=biz.paluch.logging.gelf.wildfly.WildFlyGelfLogHandler, properties={ \
+       host=${env.LOG_SERVER_HOST:udp:graylog}, \
+       port=${env.LOG_SERVER_PORT:12123}, \
+       version="1.1", \
+       extractStackTrace=true, \
+       filterStackTrace=true, \
+       mdcProfiling=false, \
+       timestampPattern="yyyy-MM-dd HH:mm:ss,SSSS", \
+       maximumMessageSize=8192, \
+       additionalFields="SystemGroup=idm,SystemComponent=idm-sso", \
+       additionalFieldTypes="SystemGroup=String,SystemComponent=String,MessageParam0=String,MessageParam1=String,MessageParam2=String,MessageParam3=String,MessageParam4=String,MessageParam5=String,MessageParam6=String" \
+})
+/subsystem=logging/custom-handler=GELF/:change-log-level(level=ALL)
+
+/subsystem=logging/root-logger=ROOT/:write-attribute(name=level,value=INFO)
+/subsystem=logging/root-logger=ROOT/:write-attribute(name=handlers,value=[FILE,CONSOLE,GELF])
+
+echo SETUP: Register custom logger
+/subsystem=logging/logger=de.tdlabs.keycloak.ext:add(category=de.tdlabs.keycloak.ext, use-parent-handlers=true, level=DEBUG)
+/subsystem=logging/logger=de.tdlabs.keycloak.ext.events:add(category=de.tdlabs.keycloak.ext.events, use-parent-handlers=true, level=DEBUG)
+                          
+echo SETUP: Adjust logging levels for custom loggers
+/subsystem=logging/logger=de.tdlabs.keycloak.ext:change-log-level(level=INFO)
+/subsystem=logging/logger=de.tdlabs.keycloak.ext.events:change-log-level(level=INFO)
+
+echo SETUP: Register Postgresql JDBC Driver
+/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
+
+echo SETUP: Configure Keycloak Datasource KeycloakDS 
+/subsystem=datasources/data-source=KeycloakDS/:remove 
+data-source add --jndi-name=java:jboss/datasources/KeycloakDS --name=KeycloakDS --connection-url=${env.JDBC_URL} --driver-name=${env.JDBC_DRIVERNAME:postgres} --user-name=${env.JDBC_USER:keycloak} --password=${env.JDBC_PASSWORD:keycloak}
+/subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=min-pool-size,value=${env.JDBC_MIN_POOL_SIZE:16})
+/subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=max-pool-size,value=${env.JDBC_MAX_POOL_SIZE:64})
+/subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=background-validation,value=true)
+/subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=check-valid-connection-sql,value="select 1")
+/subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=background-validation-millis,value=120000)
+/subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=blocking-timeout-wait-millis,value=120000)
+/subsystem=datasources/data-source=KeycloakDS/:write-attribute(name=statistics-enabled,value=${env.STATS_ENABLED:false})
+
+echo SETUP: Remove Datasource ExampleDS
+/subsystem=datasources/data-source=ExampleDS:remove
+/subsystem=ee/service=default-bindings:write-attribute(name=datasource, value=java:jboss/datasources/KeycloakDS)
+
+echo SETUP: Configure HTTP client for outgoing requests
+#/subsystem=keycloak-server/spi=connectionsHttpClient/provider=default:write-attribute(name=properties.connection-pool-size, value=128)
+
+echo SETUP: Deploy ActiveMQ RAR
+deploy ${env.JBOSS_HOME}/activemq-rar.rar
+
+echo SETUP: Register ActiveMQ Resource Adapter
+/subsystem=resource-adapters:add()
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar:add(archive=activemq-rar.rar, transaction-support=XATransaction)
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/config-properties=UseInboundSession:add(value=false)
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/config-properties=UserName:add(value=${env.ACTIVE_MQ_USER:idm})
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/config-properties=Password:add(value=${env.ACTIVE_MQ_PASSWORD:idm})
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/config-properties=ServerUrl:add(value=${env.ACTIVE_MQ_URL})
+
+echo SETUP: Register ActiveMQ JMS ConnectionFactory
+# For connection-factory properties see: http://www.ironjacamar.org/doc/userguide/1.2/en-US/html_single/index.html  
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/connection-definitions=ConnectionFactory:add(jndi-name=java:/jms/ConnectionFactory, class-name=org.apache.activemq.ra.ActiveMQManagedConnectionFactory, min-pool-size=3, max-pool-size=20, allocation-retry=1)
+# Unfortunately we cannot set a clientid here since it leads to exceptions of the form: javax.jms.InvalidClientIDException: Broker: <hostname> idm-keycloak - Client: already connected from <address>
+#/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/connection-definitions=ConnectionFactory/config-properties=clientid:add(value=idm-keycloak)
+
+echo SETUP: Register ActiveMQ Keycloak event queue
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/admin-objects=KeyCloakEventQueue:add(class-name=org.apache.activemq.command.ActiveMQQueue, jndi-name=java:/jms/queue/KeyCloakEventQueue, enabled=true)
+/subsystem=resource-adapters/resource-adapter=activemq-rar.rar/admin-objects=KeyCloakEventQueue/config-properties=PhysicalName:add(value=${env.KEYCLOAK_EVENT_QUEUE:idm.queue.keycloak.rawevents})
+
+echo SETUP: Change Keycloak Context-Root
+set contextPath=${env.KEYCLOAK_CONTEXT_PATH:u/auth}
+/subsystem=keycloak-server/:write-attribute(name="web-context",value=$contextPath)
+
+echo SETUP: Configure Undertow Proxy-Address-Forwarding for use behind Reverse Proxy
+/subsystem=undertow/server=default-server/http-listener=default/:write-attribute(name=proxy-address-forwarding,value=true)
+
+echo SETUP: Configure jgroups-tcp socket binding to use public interface
+/socket-binding-group=standard-sockets/socket-binding=jgroups-udp/:write-attribute(name=interface,value=public)
+
+echo SETUP: Adjust provider configuration for custom modules
+/subsystem=keycloak-server:list-add(name=providers,value=module:de.tdlabs.keycloak.ext.jms-event-forwarder)
+
+# Add dedicated eventsListener config element to allow configuring elements.
+/subsystem=keycloak-server/spi=eventsListener:add()
+
+echo SETUP: Configure built-in "jboss-logging" event listener
+/subsystem=keycloak-server/spi=eventsListener/provider=jboss-logging:add(enabled=true)
+# Propagate success events to INFO instead of DEBUG
+# This allows to track successful logins in log analysis
+/subsystem=keycloak-server/spi=eventsListener/provider=jboss-logging:write-attribute(name=properties.success-level,value=info)
+/subsystem=keycloak-server/spi=eventsListener/provider=jboss-logging:write-attribute(name=properties.error-level,value=warn)
+
+echo SETUP: Configure jms-event-forwarder event listener
+/subsystem=keycloak-server/spi=eventsListener/provider=de.tdlabs.keycloak.ext.jms-event-forwarder:add(enabled=true)
+
+echo SETUP: Configure built-in "email" event listener to only send emails for user initiated UPDATE_PASSWORD events
+/subsystem=keycloak-server/spi=eventsListener/provider=email:add(enabled=true)
+/subsystem=keycloak-server/spi=eventsListener/provider=email:write-attribute(name=properties.exclude-events,value=["UPDATE_TOTP","REMOVE_TOTP","LOGIN_ERROR"])
+
+echo SETUP: User Storage Provider
+# Add dedicated storeage spi config element to allow configuring elements.
+/subsystem=keycloak-server/spi=storage:add()
+/subsystem=keycloak-server/spi=storage/provider=demo-user-provider:add(enabled=true)
+/subsystem=keycloak-server/spi=storage/provider=demo-user-provider:write-attribute(name=properties.someProperty,value=helloworld)
+
+echo SETUP: Finished Keycloak configuration.

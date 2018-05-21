@@ -1,0 +1,55 @@
+    <ui:composition template="./template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+
+        <ui:define name="content">
+            <h2 id="owners">#{msg.owners}</h2>
+            <h:form id="ownersForm">
+                <h:panelGrid id="grid" columns="2" style="vertical-align: middle">
+                    <h:inputText styleClass="form-control" value="#{ownerController.searchterm}" />
+                    <h:commandButton action="#{ownerController.search}" value="#{msg.search}" styleClass="btn"/>
+                </h:panelGrid>
+
+                <rich:dataTable id="ownersTable" rows="5" value="#{ownerController.ownerList}" var="owner" styleClass="table table-striped table-hover">
+                    <rich:column sortBy="#{owner.firstName}" sortOrder="#{ownerSortingBean.sortOrderName}">
+                        <f:facet name="header">
+                            <a4j:commandLink value="#{msg.name}" render="ownersTable" action="#{ownerSortingBean.setSortOrderToName}" />
+                        </f:facet>
+                        <h:commandLink id="showOwner" action="#{ownerController.showOwner(owner.id)}">
+                            <h:outputText id="firstName" value="#{owner.firstName}"/>&#160;<h:outputText id="lastName" value="#{owner.lastName}"/>
+                        </h:commandLink>
+                    </rich:column>
+                    <rich:column sortBy="#{owner.address}" sortOrder="#{ownerSortingBean.sortOrderAddress}">
+                        <f:facet name="header">
+                            <a4j:commandLink value="#{msg.address}" render="ownersTable" action="#{ownerSortingBean.setSortOrderToAddress}" />
+                        </f:facet>
+                        <h:outputText id="address" value="#{owner.address}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{owner.city}" sortOrder="#{ownerSortingBean.sortOrderCity}">
+                        <f:facet name="header">
+                            <a4j:commandLink value="#{msg.city}" render="ownersTable" action="#{ownerSortingBean.setSortOrderToCity}" />
+                        </f:facet>
+                        <h:outputText id="city" value="#{owner.city}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{owner.telephone}" sortOrder="#{ownerSortingBean.sortOrderTelephone}">
+                        <f:facet name="header">
+                            <a4j:commandLink value="#{msg.telephone}" render="ownersTable" action="#{ownerSortingBean.setSortOrderToTelephone}" />
+                        </f:facet>
+                        <h:outputText id="telephone" value="#{owner.telephone}"/>
+                    </rich:column>
+                </rich:dataTable>
+                <rich:dataScroller for="ownersTable"
+                                   page="#{ownerController.scrollerPage}"
+                                   id="scroller"/><br/>
+
+                <br/>
+                <span class="glyphicon glyphicon-plus-sign" /><h:commandLink id="getNewOwnerForm" action="#{ownerController.getNewOwnerForm}">#{msg.addNewOwner}</h:commandLink>
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="demo.todos.ui.TodosController">
+    <children>
+        <HBox>
+            <Label fx:id="currentUsernameLabel"></Label>
+            <Button fx:id="logoutButton" text="%logoutButton.caption"/>
+        </HBox>
+        <TableView fx:id="todosTable" prefHeight="430.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="todoNameColumn" prefWidth="222.0" text="%todoNameColumn.caption"/>
+                <TableColumn fx:id="todoDescriptionColumn" prefWidth="182.0" text="%todoDescriptionColumn.caption"/>
+                <TableColumn fx:id="todoCompletedColumn" prefWidth="152.0" text="%todoCompletedColumn.caption"/>
+            </columns>
+        </TableView>
+    </children>
+</VBox>

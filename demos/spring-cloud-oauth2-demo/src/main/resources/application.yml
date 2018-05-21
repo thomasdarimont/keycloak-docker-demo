@@ -1,0 +1,25 @@
+demo:
+  keycloak:
+    realmName: spring-security-sso
+    serverUrl: http://localhost:8081/auth
+    accountUrl: ${demo.keycloak.serverUrl}/realms/${demo.keycloak.realmName}/account
+    externalBaseUrl: http://localhost:8080
+
+security:
+  oauth2:
+    client:
+      # From OIDC app
+      clientId: demo
+      clientSecret: f4548c21-cbd2-4d2c-b269-fb78c1c3445f
+      # From Authorization Server's metadata
+      accessTokenUri: ${demo.keycloak.serverUrl}/realms/${demo.keycloak.realmName}/protocol/openid-connect/token
+      userAuthorizationUri: ${demo.keycloak.serverUrl}/realms/${demo.keycloak.realmName}/protocol/openid-connect/auth
+      clientAuthenticationScheme: form
+    resource:
+      # from your Auth Server's metadata, check .well-known/openid-configuration
+      userInfoUri: ${demo.keycloak.serverUrl}/realms/${demo.keycloak.realmName}/protocol/openid-connect/userinfo
+      preferTokenInfo: false
+
+#      token-info-uri: ${demo.keycloak.serverUrl}/realms/${demo.keycloak.realmName}/protocol/openid-connect/token/introspect
+#      jwk:
+#        key-set-uri: ${demo.keycloak.serverUrl}/realms/${demo.keycloak.realmName}/protocol/openid-connect/certs

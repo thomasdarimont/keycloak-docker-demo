@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Thirdparty App</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Connect</h1>
+
+	<ul>
+		<li><a
+			th:href="@{${oauth.authEndpoint}(client_id=${oauth.clientId},redirect_uri=${oauth.redirectUri},response_type=code)}">
+				Connect User</a></li>
+		<li><a
+			th:href="@{${oauth.authEndpoint}(client_id=${oauth.clientId},redirect_uri=${oauth.redirectUri},response_type=code,scope=offline_access)}">
+				Allow API Access</a></li>
+		<li>
+			<form action="/logout" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}" /> <input type="submit" value="Logout"/>
+			</form>
+		</li>
+	</ul>
+</body>
+</html>
