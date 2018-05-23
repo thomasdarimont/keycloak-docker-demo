@@ -29,12 +29,9 @@ public class KeycloakLinkGenerator {
 
 	public String getAccountLinkWithBacklink(String backlinkUri) {
 
-		UriComponentsBuilder accountUri = UriComponentsBuilder //
-				.fromHttpUrl(keycloakSecurityContext.getToken().getIssuer()) //
-				.path("/account") //
-				.queryParam("referrer", keycloakProperties.getResource()) //
-				.queryParam("referrer_uri", backlinkUri) //
-		;
+		UriComponentsBuilder accountUri = UriComponentsBuilder
+				.fromHttpUrl(keycloakSecurityContext.getToken().getIssuer()).path("/account")
+				.queryParam("referrer", keycloakProperties.getResource()).queryParam("referrer_uri", backlinkUri);
 
 		return accountUri.toUriString();
 	}

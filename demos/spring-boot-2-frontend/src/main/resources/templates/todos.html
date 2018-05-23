@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::header"></head>
+<body>
+
+<div th:replace="fragments::menu"/>
+
+<div class="container">
+  <h1>My Todos</h1>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Completed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${todos}">
+      <td th:text="${t.name}"></td>
+      <td th:text="${t.completed}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

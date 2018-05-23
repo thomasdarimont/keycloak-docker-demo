@@ -1,0 +1,30 @@
+keycloak:
+  realm: acme
+  auth-server-url: http://sso.tdlabs.local:8899/u/auth
+  resource: app-backend-springboot
+  bearer-only: true
+  ssl-required: external
+  principal-attribute: subject
+  use-resource-role-mappings: true
+
+  securityConstraints:
+    - authRoles: [user, admin]
+      securityCollections:
+        - name: API Private Data
+          patterns: ['/todos/search/my-todos/*']
+    - authRoles: [admin]
+      securityCollections:
+        - name: API
+          patterns: ['/todos/*']
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 20000
