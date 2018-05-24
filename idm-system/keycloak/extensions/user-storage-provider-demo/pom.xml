@@ -21,7 +21,7 @@
 
         <lombok.version>1.16.18</lombok.version>
         <jboss-logging.version>3.3.1.Final</jboss-logging.version>
-        <keycloak.version>3.3.0.CR1</keycloak.version>
+        <keycloak.version>3.4.3.Final</keycloak.version>
 
         <jboss.home>target/keycloak</jboss.home>
     </properties>
