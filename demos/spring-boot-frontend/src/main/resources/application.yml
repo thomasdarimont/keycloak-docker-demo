@@ -3,11 +3,15 @@ server:
 
 keycloak:
   realm: acme
+# Note the /u path is custom configuration, by default it's just /auth
   auth-server-url: http://sso.tdlabs.local:8899/u/auth
+# The client_id
   resource: app-frontend-springboot
   credentials:
+# The client_secret
      secret: 4822a740-20b9-4ff7-bbed-e664f4a70eb6
   ssl-required: external
+# Configures what principal.getName() will return
   principal-attribute: preferred_username
   use-resource-role-mappings: true
   token-minimum-time-to-live: 30

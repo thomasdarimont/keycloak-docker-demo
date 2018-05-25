@@ -10,6 +10,17 @@
 
   <script src="/webjars/jquery/jquery.min.js"></script>
   <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  
+  <script>
+  var pingHandle = setInterval(() => {
+    fetch("/ping", { credentials: 'include', redirect: 'manual'}).then(function(response) {
+      if (!response.ok) {
+        clearInterval(pingHandle);
+        window.location.reload();
+      }
+	});
+  }, 2000);
+  </script>
 </head>
 
 <nav th:fragment="menu" class="navbar navbar-default navbar-fixed-top">
@@ -27,7 +38,8 @@
       <ul class="nav navbar-nav">
         <li><a href="/todos">My Todos</a></li>
         <li><a th:href="${@keycloakLinkGenerator.getClientLink('app-wschat')}" target="_blank">Spring Chat</a></li>
-        <li><a th:href="${@keycloakLinkGenerator.getClientLink('app-frontend-plainjs')}" target="_blank">JS Profile</a></li>
+        
+        <!-- <li><a th:href="${@keycloakLinkGenerator.getClientLink('app-frontend-plainjs')}" target="_blank">JS Profile</a></li> -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

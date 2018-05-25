@@ -16,8 +16,10 @@ class KeycloakTodoClient implements TodoClient {
 
 	private final String backendUri;
 
-	public KeycloakTodoClient(KeycloakRestTemplate keycloakRestTemplate,
-			@Value("${todo-backend.server}") String backendUri) {
+	public KeycloakTodoClient( //
+			KeycloakRestTemplate keycloakRestTemplate, //
+			@Value("${todo-backend.server}") String backendUri //
+	) {
 		this.keycloakRestTemplate = keycloakRestTemplate;
 		this.backendUri = backendUri;
 	}

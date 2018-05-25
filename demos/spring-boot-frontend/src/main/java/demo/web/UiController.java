@@ -2,10 +2,14 @@ package demo.web;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,11 +46,14 @@ class UiController {
 	}
 
 	@GetMapping("/todos*")
-	public String todos(Model model) {
+	public String todos(Model model, @AuthenticationPrincipal Principal currentUser) {
 
 		Resources<Resource<Todo>> todos = todoClient.fetchTodos();
 		model.addAttribute("todos", todos.getContent());
 
+		KeycloakAuthenticationToken keycloakUser = (KeycloakAuthenticationToken) currentUser;
+		System.out.printf("Current user roles: %s%n", keycloakUser.getAuthorities());
+		
 		return "todos";
 	}
 }

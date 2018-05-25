@@ -32,7 +32,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @KeycloakConfiguration
 @EnableConfigurationProperties(KeycloakSpringBootProperties.class)
-public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
+class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 
 	/**
 	 * Use Keycloak configuration from properties / yaml
@@ -48,7 +48,7 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		super.configure(http);
 		http.authorizeRequests() //
-				.antMatchers("/account", "/todos*").authenticated() //
+				.antMatchers("/account", "/todos*", "/ping").authenticated() //
 				.anyRequest().permitAll() //
 		;
 	}
@@ -63,7 +63,6 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 		grantedAuthorityMapper.setConvertToUpperCase(true);
 		keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(grantedAuthorityMapper);
 		auth.authenticationProvider(keycloakAuthenticationProvider);
-
 	}
 
 	@Bean

@@ -14,6 +14,9 @@ INSERT INTO todo (id, name, description, completed, created_at, owner_id)
 VALUES (4, 'Publish article', '...', FALSE, {ts '2017-09-21 18:47:52.69'},
         'af86fe6e-6558-4872-88ee-0e9448e5ae91');
 
+INSERT INTO todo (id, name, description, completed, created_at, owner_id)
+VALUES (11, 'Write article about Spring 2.0.x', '...', FALSE, {ts '2017-09-22 18:47:52.69'},
+        'af86fe6e-6558-4872-88ee-0e9448e5ae91');
 
 --
 
