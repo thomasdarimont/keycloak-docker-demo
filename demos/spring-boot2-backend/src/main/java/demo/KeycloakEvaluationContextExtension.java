@@ -12,25 +12,25 @@ import java.security.Principal;
 @Component
 class KeycloakEvaluationContextExtension extends EvaluationContextExtensionSupport {
 
-  @Override
-  public String getExtensionId() {
-    return "keycloak";
-  }
-
-  @Override
-  public Object getRootObject() {
-    return getKeycloakSecurityContext();
-  }
-
-  protected KeycloakSecurityContext getKeycloakSecurityContext() {
-
-    ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-    Principal principal = attributes.getRequest().getUserPrincipal();
-
-    if (principal instanceof KeycloakPrincipal) {
-      return KeycloakPrincipal.class.cast(principal).getKeycloakSecurityContext();
+    @Override
+    public String getExtensionId() {
+        return "keycloak";
     }
 
-    return null;
-  }
+    @Override
+    public Object getRootObject() {
+        return getKeycloakSecurityContext();
+    }
+
+    protected KeycloakSecurityContext getKeycloakSecurityContext() {
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        Principal principal = attributes.getRequest().getUserPrincipal();
+
+        if (principal instanceof KeycloakPrincipal) {
+            return KeycloakPrincipal.class.cast(principal).getKeycloakSecurityContext();
+        }
+
+        return null;
+    }
 }

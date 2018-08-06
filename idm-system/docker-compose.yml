@@ -8,7 +8,7 @@ services:
       - ./data/mongodb/data:/data/db
 
   elasticsearch:
-    image: "elasticsearch:5.5.2"
+    image: "elasticsearch:5.6.10"
     command: "elasticsearch -Ecluster.name=graylog"
     ports:
       - "9200:9200"
@@ -17,7 +17,7 @@ services:
 
 # see https://hub.docker.com/r/graylog2/server/
   graylog:
-    image: graylog2/server:2.4.3-1
+    image: graylog/graylog:2.4.6-1
     environment:
       GRAYLOG_PASSWORD_SECRET: somepasswordpepper
       GRAYLOG_ROOT_PASSWORD_SHA2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
@@ -35,7 +35,7 @@ services:
 #      - ./data/graylog/config:/usr/share/graylog/data/config      
 
   idm-db:
-    image: postgres:9.6.2
+    image: postgres:10.4-alpine
     environment: 
        POSTGRES_USER: keycloak
        POSTGRES_PASSWORD: keycloak
@@ -54,7 +54,8 @@ services:
       - ./data/activemq/data:/var/activemq/data
 
   idm-keycloak:
-    image: tdlabs/keycloak:3.4.3.Final.3.springio18
+#    image: tdlabs/keycloak:4.2.1.Final.6.springio18
+    build: ./keycloak
     environment: 
       KEYCLOAK_ADMIN_USER: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -73,6 +74,8 @@ services:
       - graylog
       - idm-amq
       - idm-db
+    volumes:
+      - ./acme-realm.json:/opt/jboss/keycloak/acme-realm.json
 
 
 # see https://github.com/docker/dockercloud-haproxy

@@ -34,7 +34,7 @@ echo SETUP: Add GELF logging
 /subsystem=logging/custom-handler=GELF/:change-log-level(level=ALL)
 
 /subsystem=logging/root-logger=ROOT/:write-attribute(name=level,value=INFO)
-/subsystem=logging/root-logger=ROOT/:write-attribute(name=handlers,value=[FILE,CONSOLE,GELF])
+/subsystem=logging/root-logger=ROOT/:write-attribute(name=handlers,value=[CONSOLE,GELF])
 
 echo SETUP: Register custom logger
 /subsystem=logging/logger=de.tdlabs.keycloak.ext:add(category=de.tdlabs.keycloak.ext, use-parent-handlers=true, level=DEBUG)

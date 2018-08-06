@@ -21,7 +21,7 @@ exec $JBOSS_HOME/bin/standalone.sh \
   -b $CONTAINER_IP \
   -bmanagement $CONTAINER_IP \
   -Djboss.default.multicast.address=224.0.55.55 \
-  -Dkeycloak.migration.action=export \
+  -Dkeycloak.migration.action=import \
   -Dkeycloak.migration.realmName=acme \
   -Dkeycloak.migration.provider=singleFile \
   -Dkeycloak.migration.file=acme-realm.json \

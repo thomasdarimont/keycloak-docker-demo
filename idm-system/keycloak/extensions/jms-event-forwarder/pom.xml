@@ -4,11 +4,11 @@
 
    <groupId>de.tdlabs.keycloak</groupId>
    <artifactId>jms-event-forwarder</artifactId>
-   <version>1.0.0.BUILD-SNAPSHOT</version>
+   <version>1.0.1.BUILD-SNAPSHOT</version>
 
    <properties>
       <jboss-jms-spec.version>1.0.0.Final</jboss-jms-spec.version>
-      <keycloak.version>3.4.3.Final</keycloak.version>
+      <keycloak.version>4.2.1.Final</keycloak.version>
       <lombok.version>1.16.18</lombok.version>
 
       <maven.compiler.source>1.8</maven.compiler.source>
