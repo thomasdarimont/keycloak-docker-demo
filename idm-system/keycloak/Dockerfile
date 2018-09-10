@@ -1,4 +1,4 @@
-FROM jboss/keycloak:4.2.1.Final
+FROM jboss/keycloak:4.4.0.Final
 
 # Keycloak User
 ENV KEYCLOAK_ADMIN_USER admin
@@ -52,5 +52,8 @@ COPY extensions/user-storage-provider-demo/ear-module/target/*.ear /opt/jboss/ke
 
 COPY docker-entrypoint.sh /opt/jboss 
 COPY keycloak-setup.cli /opt/jboss/keycloak
+
+COPY docker-entrypoint.sh /opt/jboss/tools
+COPY keycloak-setup.cli /opt/jboss/tools
 
 CMD ["--server-config", "standalone-ha.xml"]

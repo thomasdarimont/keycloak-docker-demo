@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #KC_VERSION=${KC_VERSION:-latest}
-KC_VERSION=${KC_VERSION:-4.2.1.Final.6.springio18}
+KC_VERSION=${KC_VERSION:-4.4.0.Final.1.security-jena}
 
 docker build -t tdlabs/keycloak:$KC_VERSION .
 

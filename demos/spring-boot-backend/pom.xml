@@ -22,15 +22,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        
-        <keycloak.version>4.2.1.Final</keycloak.version>
+
+        <keycloak.version>4.4.0.Final</keycloak.version>
     </properties>
 
     <dependencies>
         <dependency>
-        <!-- don't forget the BOM in dependency-management! -->
+            <!-- don't forget the BOM in dependency-management! -->
             <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-spring-boot-starter</artifactId>
+            <artifactId>keycloak-legacy-spring-boot-starter</artifactId>
+            <version>${keycloak.version}</version>
         </dependency>
 
         <dependency>
