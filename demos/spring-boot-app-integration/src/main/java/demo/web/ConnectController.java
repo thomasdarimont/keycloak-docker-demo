@@ -64,6 +64,15 @@ public class ConnectController {
 
 		Map<String, Object> additionalValues = new HashMap<>();
 
+		public ConnectRequest(){
+		}
+
+		public ConnectRequest(String session_state, String code, Map<String, Object> additionalValues) {
+			this.session_state = session_state;
+			this.code = code;
+			this.additionalValues = additionalValues;
+		}
+
 		@JsonAnySetter
 		public void addAdditional(String key, Object value) {
 			additionalValues.put(key, value);

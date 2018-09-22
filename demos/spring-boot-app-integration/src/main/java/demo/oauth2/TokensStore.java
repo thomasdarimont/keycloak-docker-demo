@@ -36,18 +36,28 @@ public class TokensStore {
 		private final long createdAt = System.currentTimeMillis();
 
 		@JsonProperty(value = "access_token")
-		private final String accessToken;
+		private String accessToken;
 
 		@JsonProperty(value = "refresh_token")
-		private final String refreshToken;
+		private String refreshToken;
 
 		@JsonProperty(value = "refresh_expires_in")
-		private final long refreshExpiresInSeconds;
+		private long refreshExpiresInSeconds;
 
 		@JsonProperty(value = "expires_in")
-		private final long expiresInSeconds;
+		private long expiresInSeconds;
 
 		Map<String, Object> additionalValues = new HashMap<>();
+
+		public Tokens() {
+		}
+
+		public Tokens(String accessToken, String refreshToken, long refreshExpiresInSeconds, long expiresInSeconds) {
+			this.accessToken = accessToken;
+			this.refreshToken = refreshToken;
+			this.refreshExpiresInSeconds = refreshExpiresInSeconds;
+			this.expiresInSeconds = expiresInSeconds;
+		}
 
 		@JsonAnySetter
 		public void addAdditional(String key, Object value) {
