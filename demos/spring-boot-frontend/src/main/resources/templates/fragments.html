@@ -10,12 +10,13 @@
 
   <script src="/webjars/jquery/jquery.min.js"></script>
   <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-  <script>
-  <!-- Polling to automatically reload the page if the user is logged out -->
-  <!-- 
+
+  <!--
+  Polling to automatically reload the page if the user is logged out
   Note that a more efficient approach would be to use the Page Visibility API
   https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
   -->
+  <script>
   var pingHandle = setInterval(() => {
     fetch("/ping", { credentials: 'include', redirect: 'manual'}).then(function(response) {
       if (!response.ok) {

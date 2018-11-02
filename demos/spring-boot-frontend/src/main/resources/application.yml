@@ -2,6 +2,11 @@ server:
   port: 20001
 
 keycloak:
+  # turn off keycloak spring boot auto-configuration:
+  # We only want to use Spring Security without servlet container specific infrastructure
+  # This allows us to pull the Keycloak configuration from here instead of keycloak.json
+  enabled: false
+
   realm: acme
 # Note the /u path is custom configuration, by default it's just /auth
   auth-server-url: http://sso.tdlabs.local:8899/u/auth

@@ -27,7 +27,7 @@ public class KeycloakLinkGenerator {
 		);
 	}
 
-	public String getAccountLinkWithBacklink(String backlinkUri) {
+	public String createAccountLinkWithBacklink(String backlinkUri) {
 
 		UriComponentsBuilder accountUri = UriComponentsBuilder //
 				.fromHttpUrl(keycloakSecurityContext.getToken().getIssuer()) //

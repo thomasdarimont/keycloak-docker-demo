@@ -54,7 +54,6 @@ services:
       - ./data/activemq/data:/var/activemq/data
 
   idm-keycloak:
-#    image: tdlabs/keycloak:4.2.1.Final.6.springio18
     build: ./keycloak
     environment: 
       KEYCLOAK_ADMIN_USER: admin

@@ -42,7 +42,7 @@ class UiController {
 	public String account() {
 
 		String todoUri = linkTo(getClass()).toUriComponentsBuilder().path("/todos").toUriString();
-		return "redirect:" + keycloakLinkGenerator.getAccountLinkWithBacklink(todoUri);
+		return "redirect:" + keycloakLinkGenerator.createAccountLinkWithBacklink(todoUri);
 	}
 
 	@GetMapping("/todos*")
