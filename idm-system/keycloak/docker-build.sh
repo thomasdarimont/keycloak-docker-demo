@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #KC_VERSION=${KC_VERSION:-latest}
-KC_VERSION=${KC_VERSION:-4.4.0.Final.1.security-jena}
+KC_VERSION=${KC_VERSION:-4.5.0.Final.1.wjax}
 
 docker build -t tdlabs/keycloak:$KC_VERSION .
 
