@@ -2,13 +2,14 @@ server:
   port: 20001
 
 keycloak:
-  # turn off keycloak spring boot auto-configuration:
-  # We only want to use Spring Security without servlet container specific infrastructure
+  # turn off Spring-Boots Keycloak AutoConfiguration:
+  # We only want to use Spring-Security without servlet container specific infrastructure.
   # This allows us to pull the Keycloak configuration from here instead of keycloak.json
   enabled: false
 
   realm: acme
   auth-server-url: http://sso.tdlabs.local:8899/u/auth
+  # The client-id
   resource: app-frontend-springboot
   credentials:
      secret: 4822a740-20b9-4ff7-bbed-e664f4a70eb6
@@ -16,7 +17,6 @@ keycloak:
   principal-attribute: preferred_username
   use-resource-role-mappings: true
   token-minimum-time-to-live: 30
-
 
 todo-backend:
   server: http://apps.tdlabs.local:20000
