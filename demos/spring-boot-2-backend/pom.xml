@@ -29,6 +29,7 @@
     <dependencies>
         <dependency>
             <groupId>org.keycloak</groupId>
+            <!-- Uses spring-boot-2 since 4.x -->
             <artifactId>keycloak-spring-boot-starter</artifactId>
         </dependency>
 
