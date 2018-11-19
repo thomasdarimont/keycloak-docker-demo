@@ -1,6 +1,10 @@
 server:
   port: 20001
 
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
 keycloak:
   # turn off Spring-Boots Keycloak AutoConfiguration:
   # We only want to use Spring-Security without servlet container specific infrastructure.
