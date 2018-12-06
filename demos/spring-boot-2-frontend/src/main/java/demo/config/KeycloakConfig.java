@@ -123,9 +123,5 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
      */
     @Configuration
     static class CustomKeycloakBaseSpringBootConfiguration extends KeycloakBaseSpringBootConfiguration {
-        @Override
-        public void setKeycloakConfigResolvers(KeycloakConfigResolver configResolver) {
-            // NOOP avoids recursive calls to setKeycloakConfigResolvers
-        }
     }
 }
