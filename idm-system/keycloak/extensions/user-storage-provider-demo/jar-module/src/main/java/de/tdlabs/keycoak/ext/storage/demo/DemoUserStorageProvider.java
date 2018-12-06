@@ -176,7 +176,7 @@ public class DemoUserStorageProvider implements UserStorageProvider,
 
     log.debugv("search for users with params: realm={0} params={1}", realm.getId(), params);
 
-    return null;
+    return searchForUser("", realm);
   }
 
   @Override
@@ -184,7 +184,7 @@ public class DemoUserStorageProvider implements UserStorageProvider,
 
     log.debugv("search for users with params: realm={0} params={1} firstResult={2} maxResults={3}", realm.getId(), params, firstResult, maxResults);
 
-    return null;
+    return searchForUser("", realm);
   }
 
   @Override

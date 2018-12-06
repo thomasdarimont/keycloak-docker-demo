@@ -8,7 +8,7 @@
 
    <properties>
       <jboss-jms-spec.version>1.0.0.Final</jboss-jms-spec.version>
-      <keycloak.version>4.4.0.Final</keycloak.version>
+      <keycloak.version>4.7.0.Final</keycloak.version>
       <lombok.version>1.16.18</lombok.version>
 
       <maven.compiler.source>1.8</maven.compiler.source>
