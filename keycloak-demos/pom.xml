@@ -14,7 +14,7 @@
         <module>spring-boot-frontend</module>
         <module>spring-boot-backend</module>
         <module>spring-boot-frontend-javafx</module>
-        <module>spring-boot-security-saml-sample</module>
+        <module>spring-boot-2-security-saml</module>
     </modules>
 
 </project>
