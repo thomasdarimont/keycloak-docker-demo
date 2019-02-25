@@ -11,6 +11,6 @@ import java.util.List;
 interface TodoRepository extends CrudRepository<Todo, Long> {
 
   @RestResource(path = "my-todos")
-  @Query("select t from Todo t where t.ownerId = ?#{ #keycloak.token.subject }")
+  @Query("select t from Todo t where t.owner = ?#{ #keycloak.token.preferredUsername }")
   List<Todo> findMyTodos();
 }

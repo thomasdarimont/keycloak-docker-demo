@@ -25,5 +25,5 @@ class Todo {
 
   private LocalDateTime updatedAt;
 
-  private String ownerId;
+  private String owner;
 }
