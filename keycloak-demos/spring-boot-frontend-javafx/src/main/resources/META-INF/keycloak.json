@@ -1,0 +1,8 @@
+{
+  "realm": "hm",
+  "auth-server-url": "http://sso.tdlabs.local:8899/u/auth",
+  "ssl-required": "external",
+  "resource": "app-document-client",
+  "public-client": true,
+  "use-resource-role-mappings": true
+}

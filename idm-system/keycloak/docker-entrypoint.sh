@@ -15,15 +15,22 @@ echo
 echo "Starting Keycloak"
 java -version
 
-export CONTAINER_IP=$(hostname -i) 
+export CONTAINER_IP=$(hostname -i)
+
+: "${KC_MIGRATION_ACTION:=import}"
+: "${KC_MIGRATION_REALM:=acme}"
+: "${KC_MIGRATION_FILE:=acme-realm.json}"
+
+echo Starting with KC_MIGRATION_ACTION="$KC_MIGRATION_ACTION" KC_MIGRATION_REALM=$KC_MIGRATION_REALM KC_MIGRATION_FILE=$KC_MIGRATION_FILE
 
 exec $JBOSS_HOME/bin/standalone.sh \
   -b $CONTAINER_IP \
   -bmanagement $CONTAINER_IP \
   -Djboss.default.multicast.address=224.0.55.55 \
-  -Dkeycloak.migration.action=import \
-  -Dkeycloak.migration.realmName=acme \
+  -Dkeycloak.migration.action=$KC_MIGRATION_ACTION \
+  -Dkeycloak.migration.realmName=$KC_MIGRATION_REALM \
   -Dkeycloak.migration.provider=singleFile \
-  -Dkeycloak.migration.file=acme-realm.json \
+  -Dkeycloak.migration.file=/opt/jboss/keycloak/impexp/$KC_MIGRATION_FILE \
+  --debug \
   $@ 
 exit $?

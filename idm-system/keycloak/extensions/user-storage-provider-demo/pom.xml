@@ -15,15 +15,18 @@
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+      <!-- general settings -->
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <java.version>1.8</java.version>
+      <maven.compiler.source>${java.version}</maven.compiler.source>
+      <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <lombok.version>1.16.18</lombok.version>
-        <jboss-logging.version>3.3.1.Final</jboss-logging.version>
-        <keycloak.version>4.7.0.Final</keycloak.version>
+      <jboss-jms-spec.version>1.0.2.Final</jboss-jms-spec.version>
+      <keycloak.version>4.8.3.Final</keycloak.version>
+      <lombok.version>1.18.4</lombok.version>
 
-        <jboss.home>target/keycloak</jboss.home>
+      <jboss-logging.version>3.3.2.Final</jboss-logging.version>
+      <jboss.home>target/keycloak</jboss.home>
     </properties>
 
     <build>
@@ -31,7 +34,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
-                <version>2.10.1</version>
+                <version>3.0.1</version>
                 <configuration>
                     <version>7</version>
                 </configuration>
@@ -40,7 +43,7 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.2.0.Final</version>
+                <version>2.0.1.Final</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>

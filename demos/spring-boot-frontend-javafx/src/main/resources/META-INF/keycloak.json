@@ -1,8 +1,0 @@
-{
-  "realm": "acme",
-  "auth-server-url": "http://sso.tdlabs.local:8899/u/auth",
-  "ssl-required": "external",
-  "resource": "app-frontend-javafx",
-  "public-client": true,
-  "use-resource-role-mappings": true
-}
