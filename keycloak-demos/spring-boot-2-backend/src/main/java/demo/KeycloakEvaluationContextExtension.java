@@ -2,7 +2,7 @@ package demo;
 
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
-import org.springframework.data.repository.query.spi.EvaluationContextExtensionSupport;
+import org.springframework.data.spel.spi.EvaluationContextExtension;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -10,7 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.security.Principal;
 
 @Component
-class KeycloakEvaluationContextExtension extends EvaluationContextExtensionSupport {
+class KeycloakEvaluationContextExtension implements EvaluationContextExtension {
 
     @Override
     public String getExtensionId() {
