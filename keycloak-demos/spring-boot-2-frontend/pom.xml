@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.tdlabs.demos</groupId>
+    <groupId>com.github.thomasdarimont.keycloak</groupId>
     <artifactId>spring-boot-2-frontend</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
