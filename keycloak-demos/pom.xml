@@ -6,7 +6,16 @@
 
     <groupId>com.github.thomasdarimont.keycloak</groupId>
     <artifactId>keycloak-demos</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <keycloak.version>4.8.3.Final</keycloak.version>
+    </properties>
 
     <modules>
         <module>spring-boot-2-frontend</module>
@@ -15,6 +24,18 @@
         <module>spring-boot-backend</module>
         <module>spring-boot-frontend-javafx</module>
         <module>spring-boot-2-security-saml</module>
+        <module>keycloak-admin-client-example</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.6</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
