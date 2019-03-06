@@ -78,6 +78,15 @@ services:
     volumes:
       - ./impexp:/opt/jboss/keycloak/impexp
 
+  mailserver:
+    image: mailhog/mailhog@sha256:98c7e2e6621c897ad86f31610d756d76b8ee622c354c28a76f4ed49fb6ed996f
+# See: https://github.com/mailhog/MailHog/issues/56
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - "127.0.0.1:8025:8025"
+      - "127.0.0.1:1025:1025"
+
 
 # see https://github.com/docker/dockercloud-haproxy
 #  ha-proxy:
