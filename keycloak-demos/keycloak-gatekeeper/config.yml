@@ -1,0 +1,15 @@
+listen: :8001
+upstream-url: http://127.0.0.1:8000
+
+# Yields: http://localhost:8001/oauth/callback
+redirection-url: http://localhost:8001
+ 
+client-id: app-gatekeeper
+client-secret: 471a553f-62d6-4108-ad29-79623ddca88f
+encryption-key: B7pTUNy7kWL78TCy1t6sxUrMUs9SmBMR
+ 
+discovery-url: "http://localhost:8081/auth/realms/demo"
+ 
+enable-refresh-tokens: true
+# Enable in production and serve via https
+secure-cookie: false
