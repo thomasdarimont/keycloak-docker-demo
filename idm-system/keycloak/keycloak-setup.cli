@@ -96,6 +96,11 @@ echo SETUP: Configure Undertow Proxy-Address-Forwarding for use behind Reverse P
 echo SETUP: Configure jgroups-tcp socket binding to use public interface
 /socket-binding-group=standard-sockets/socket-binding=jgroups-udp/:write-attribute(name=interface,value=public)
 
+echo SETUP: Configure keystore for TLS
+/core-service=management/security-realm=Undertow:add()
+/core-service=management/security-realm=Undertow/server-identity=ssl:add(keystore-path="keycloak.jks",keystore-relative-to="jboss.server.config.dir",keystore-password="changeit")
+/subsystem=undertow/server=default-server/https-listener=https:write-attribute(name=security-realm,value=Undertow)
+
 echo SETUP: Adjust provider configuration for custom modules
 /subsystem=keycloak-server:list-add(name=providers,value=module:de.tdlabs.keycloak.ext.jms-event-forwarder)
 

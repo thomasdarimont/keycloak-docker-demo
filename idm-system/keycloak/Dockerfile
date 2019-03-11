@@ -46,6 +46,8 @@ ADD /modules /opt/jboss/keycloak/modules
 ADD /themes/springio18 /opt/jboss/keycloak/themes/springio18
 ADD /themes/wjax18 /opt/jboss/keycloak/themes/wjax18
 
+COPY keycloak.jks /opt/jboss/keycloak/standalone/configuration
+
 COPY activemq-rar.rar /opt/jboss/keycloak
 COPY extensions/jms-event-forwarder/target/jms-event-forwarder*.jar /opt/jboss/keycloak/modules/de/tdlabs/keycloak/ext/jms-event-forwarder/main/jms-event-forwarder.jar
 

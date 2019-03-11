@@ -1,0 +1,24 @@
+server:
+  port: 20007
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+keycloak:
+  # turn off Spring-Boots Keycloak AutoConfiguration:
+  # We only want to use Spring-Security without servlet container specific infrastructure.
+  # This allows us to pull the Keycloak configuration from here instead of keycloak.json
+  enabled: false
+
+  realm: acme
+# auth-server-url: http://localhost:8080/auth
+  auth-server-url: http://sso.tdlabs.local:8899/u/auth
+  # The client-id
+  resource: app-webflux-frontend-springboot
+  credentials:
+     secret: bf963144-0295-439c-9107-2c649c39174d
+  ssl-required: external
+  principal-attribute: preferred_username
+  use-resource-role-mappings: true
+  token-minimum-time-to-live: 30

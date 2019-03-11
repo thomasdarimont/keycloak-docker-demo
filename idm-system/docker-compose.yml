@@ -68,6 +68,7 @@ services:
       KC_MIGRATION_ACTION: export
     ports:
       - "127.0.0.1:8899:8080"
+      - "127.0.0.1:8843:8443"
       - "127.0.0.1:8887:8787"
     extra_hosts:
       - "apps.tdlabs.local:172.18.0.1"
