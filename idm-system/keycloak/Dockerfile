@@ -53,6 +53,8 @@ COPY extensions/jms-event-forwarder/target/jms-event-forwarder*.jar /opt/jboss/k
 
 COPY extensions/user-storage-provider-demo/ear-module/target/*.ear /opt/jboss/keycloak/standalone/deployments/
 
+COPY extensions/keycloak-example-themes.jar /opt/jboss/keycloak/standalone/deployments/
+
 COPY docker-entrypoint.sh /opt/jboss 
 COPY keycloak-setup.cli /opt/jboss/keycloak
 
