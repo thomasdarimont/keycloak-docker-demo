@@ -21,6 +21,8 @@ keycloak:
   principal-attribute: preferred_username
   use-resource-role-mappings: true
   token-minimum-time-to-live: 30
+#  client-keystore: ../../idm-system/keycloak/keycloak.jks
+#  client-keystore-password: changeit
 
 todo-backend:
   server: http://apps.tdlabs.local:20000

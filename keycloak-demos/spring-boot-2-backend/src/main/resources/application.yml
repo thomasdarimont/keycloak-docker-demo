@@ -1,11 +1,14 @@
 keycloak:
   realm: acme
   auth-server-url: http://sso.tdlabs.local:8899/u/auth
+# client_id
   resource: app-backend-springboot
   bearer-only: true
   ssl-required: external
   principal-attribute: subject
   use-resource-role-mappings: true
+#  client-keystore: ../../idm-system/keycloak/keycloak.jks
+#  client-keystore-password: changeit
 
   securityConstraints:
     - authRoles: [user, admin]
