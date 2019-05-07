@@ -25,7 +25,8 @@
 <div class="wrapper" id="profile" style="display: none;">
     <div class="menu">
         <button name="profileBtn" onclick="showProfile()">Profile</button>
-        <button name="tokenBtn" onclick="showToken()">Token</button>
+        <button name="tokenBtn" onclick="showToken()">AccessToken</button>
+        <button name="idTokenBtn" onclick="showIdToken()">IDToken</button>
         <button name="logoutBtn" onclick="keycloak.logout()">Logout</button>
         <button name="accountBtn" onclick="keycloak.accountManagement()">Account</button>
     </div>
@@ -57,7 +58,22 @@
 <div class="wrapper" id="token" style="display: none;">
     <div class="menu">
         <button onclick="showProfile()">Profile</button>
-        <button onclick="showToken()">Token</button>
+        <button onclick="showToken()">AccessToken</button>
+        <button onclick="showIdToken()">IDToken</button>
+        <button onclick="keycloak.logout()">Logout</button>
+        <button onclick="keycloak.accountManagement()">Account</button>
+    </div>
+
+    <div class="content">
+        <div id="token-content" class="message"></div>
+    </div>
+</div>
+
+<div class="wrapper" id="idToken" style="display: none;">
+    <div class="menu">
+        <button onclick="showProfile()">Profile</button>
+        <button onclick="showToken()">AccessToken</button>
+        <button onclick="showIdToken()">IDToken</button>
         <button onclick="keycloak.logout()">Logout</button>
         <button onclick="keycloak.accountManagement()">Account</button>
     </div>

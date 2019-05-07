@@ -46,10 +46,16 @@ function showToken() {
   show('token');
 }
 
+function showIdToken() {
+  document.getElementById('token-content').innerHTML = JSON.stringify(keycloak.idTokenParsed, null, '    ');
+  show('token');
+}
+
 function show(id) {
   document.getElementById('welcome').style.display = 'none';
   document.getElementById('profile').style.display = 'none';
   document.getElementById('token').style.display = 'none';
+  document.getElementById('idToken').style.display = 'none';
   document.getElementById(id).style.display = 'block';
 }
 
