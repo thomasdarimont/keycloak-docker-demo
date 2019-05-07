@@ -1,0 +1,43 @@
+spring:
+  jackson:
+    deserialization:
+# deals with single and multi-valued JWT claims
+      accept-single-value-as-array: true
+
+server:
+  port: 20009
+
+security:
+  oauth2:
+# The representation of our resource server
+    resource:
+      # client-id
+      id: app-backend-springboot-oauth2
+      jwk:
+      # We use dynamic key resolving via JWKS in order to support key rotation
+        key-set-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/certs
+#      token-info-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/token/introspect
+#      user-info-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/userinfo
+
+# If you want this service to call other services on it's own via Oauth2RestTemplate... enable this client config
+    client:
+      access-token-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/token
+      client-id: ${security.oauth2.resource.id}
+      client-secret: c3903802-7ba5-47f8-ab78-9782b67f0be6
+      grant-type: client_credentials
+      scope: openid
+      user-authorization-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/auth
+
+
+logging:
+  level:
+    org:
+      arun: DEBUG
+      springframework:
+        security: DEBUG
+    root: INFO
+
+acme:
+  security:
+    oauth2:
+      issuer-uri: http://sso.tdlabs.local:8899/u/auth/realms/acme
