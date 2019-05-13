@@ -62,7 +62,7 @@ public class TodosController {
 	@FXML
 	public void initialize() {
 
-		//currentUsernameLabel.setText("User: " + JavaFxFrontendApplication.KEYCLOAK.getIdToken().getPreferredUsername());
+		currentUsernameLabel.setText("User: " + JavaFxFrontendApplication.KEYCLOAK.getIdToken().getPreferredUsername());
 		logoutButton.setOnAction(this::doLogout);
 
 		configureProjectsTable();
@@ -81,7 +81,7 @@ public class TodosController {
 		Task<Void> logoutTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-		//		JavaFxFrontendApplication.KEYCLOAK.logout();
+				JavaFxFrontendApplication.KEYCLOAK.logout();
 				Platform.exit();
 				return null;
 			}

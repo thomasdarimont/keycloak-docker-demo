@@ -18,7 +18,6 @@ import static org.springframework.hateoas.config.EnableHypermediaSupport.Hyperme
 @EnableHypermediaSupport(type = HypermediaType.HAL)
 public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport {
 
-  /*
   public static final KeycloakInstalled KEYCLOAK = new KeycloakInstalled(){
 
     HttpResponseWriter loginResponseWriter;
@@ -34,22 +33,21 @@ public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport 
       return loginResponseWriter;
     }
   };
-*/
 
   public static void main(String[] args) throws Exception{
-    //launchApp(JavaFxFrontendApplication.class, TodosView.class, args);
+    launchApp(JavaFxFrontendApplication.class, TodosView.class, args);
 
-    KeycloakInstalled keycloakInstalled = new KeycloakInstalled();
-
-    keycloakInstalled.logout();
-    keycloakInstalled.loginDesktop();
-
-
-
-    String accessTokenString = keycloakInstalled.getTokenString(5, TimeUnit.MINUTES);
-    System.out.println("AccessToken: " + accessTokenString);
-    System.out.println("RefreshToken: " + keycloakInstalled.getRefreshToken());
-    System.out.println("IDToken: " + keycloakInstalled.getIdTokenString());
+//    KeycloakInstalled keycloakInstalled = new KeycloakInstalled();
+//
+//    keycloakInstalled.logout();
+//    keycloakInstalled.loginDesktop();
+//
+//
+//
+//    String accessTokenString = keycloakInstalled.getTokenString(5, TimeUnit.MINUTES);
+//    System.out.println("AccessToken: " + accessTokenString);
+//    System.out.println("RefreshToken: " + keycloakInstalled.getRefreshToken());
+//    System.out.println("IDToken: " + keycloakInstalled.getIdTokenString());
 
 
   }
@@ -57,7 +55,6 @@ public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport 
   @Override
   public void init() throws Exception {
 
-    /*
     KEYCLOAK.setLoginResponseWriter(new KeycloakInstalled.HttpResponseWriter() {
       @Override
       public void success(PrintWriter pw, KeycloakInstalled ki) {
@@ -77,6 +74,5 @@ public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport 
 
     super.init();
 
-    */
   }
 }

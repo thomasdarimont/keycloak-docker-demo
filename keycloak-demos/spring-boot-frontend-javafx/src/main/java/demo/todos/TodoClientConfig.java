@@ -22,8 +22,8 @@ public class TodoClientConfig {
 		public void apply(RequestTemplate template) {
 
 			try {
-				// String accessToken = JavaFxFrontendApplication.KEYCLOAK.getTokenString(5, TimeUnit.SECONDS);
-				// template.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+				 String accessToken = JavaFxFrontendApplication.KEYCLOAK.getTokenString(5, TimeUnit.SECONDS);
+				 template.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
