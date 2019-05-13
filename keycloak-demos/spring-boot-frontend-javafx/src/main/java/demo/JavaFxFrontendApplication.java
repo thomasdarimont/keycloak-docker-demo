@@ -22,6 +22,8 @@ public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport 
 
     HttpResponseWriter loginResponseWriter;
 
+    HttpResponseWriter logoutResponseWriter;
+
     @Override
     public void setLoginResponseWriter(HttpResponseWriter loginResponseWriter) {
       super.setLoginResponseWriter(loginResponseWriter);
@@ -31,6 +33,17 @@ public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport 
     @Override
     public HttpResponseWriter getLoginResponseWriter() {
       return loginResponseWriter;
+    }
+
+    @Override
+    public void setLogoutResponseWriter(HttpResponseWriter logoutResponseWriter) {
+      super.setLogoutResponseWriter(logoutResponseWriter);
+      this.logoutResponseWriter = logoutResponseWriter;
+    }
+
+    @Override
+    public HttpResponseWriter getLogoutResponseWriter() {
+      return logoutResponseWriter;
     }
   };
 
@@ -42,14 +55,10 @@ public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport 
 //    keycloakInstalled.logout();
 //    keycloakInstalled.loginDesktop();
 //
-//
-//
 //    String accessTokenString = keycloakInstalled.getTokenString(5, TimeUnit.MINUTES);
 //    System.out.println("AccessToken: " + accessTokenString);
 //    System.out.println("RefreshToken: " + keycloakInstalled.getRefreshToken());
 //    System.out.println("IDToken: " + keycloakInstalled.getIdTokenString());
-
-
   }
 
   @Override
@@ -67,9 +76,27 @@ public class JavaFxFrontendApplication extends AbstractJavaFxApplicationSupport 
 
       @Override
       public void failure(PrintWriter pw, KeycloakInstalled ki) {
-
+        // TODO handle failure
       }
     });
+
+    KEYCLOAK.setLogoutResponseWriter(new KeycloakInstalled.HttpResponseWriter() {
+      @Override
+      public void success(PrintWriter pw, KeycloakInstalled ki) {
+
+        pw.println("HTTP/1.1 200 OK");
+        pw.println();
+
+        pw.println("<html><body><h1>Logout complete.</h1><div>Please <a href=\"#\" onclick=\"window.close();return false;\">close</a> this browser tab.</div></body></html>");
+      }
+
+      @Override
+      public void failure(PrintWriter pw, KeycloakInstalled ki) {
+        // TODO handle failure
+      }
+    });
+
+
     KEYCLOAK.loginDesktop();
 
     super.init();
