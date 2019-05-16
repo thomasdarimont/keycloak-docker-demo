@@ -37,6 +37,9 @@ public class KeycloakToken {
     @JsonProperty("aud")
     Set<String> audience;
 
+    @JsonProperty("allowed-origins")
+    Set<String> allowedOrigins;
+
     String scope;
 
     @JsonProperty("preferred_username")

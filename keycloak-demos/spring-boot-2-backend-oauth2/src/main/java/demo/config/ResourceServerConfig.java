@@ -39,7 +39,8 @@ class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .cors().disable() // for the sake of the demo
                 .headers().frameOptions().disable() //
                 .and().csrf().disable() // for the sake of the demo
-                .authorizeRequests().antMatchers("/api/**").authenticated();
+                .authorizeRequests().antMatchers("/api/**","/todos").authenticated()
+                ;
 
     }
 

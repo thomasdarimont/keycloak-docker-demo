@@ -26,6 +26,7 @@
         <module>spring-boot-2-security-saml</module>
         <module>keycloak-admin-client-example</module>
         <module>spring-boot-2-webflux-frontend</module>
+        <module>spring-boot-2-backend-oauth2-springsec53</module>
     </modules>
 
     <dependencyManagement>

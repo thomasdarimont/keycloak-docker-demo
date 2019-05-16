@@ -1,5 +1,11 @@
 spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
   jackson:
+    serialization:
+      write-dates-as-timestamps: false
     deserialization:
 # deals with single and multi-valued JWT claims
       accept-single-value-as-array: true
@@ -32,9 +38,8 @@ security:
 logging:
   level:
     org:
-      arun: DEBUG
       springframework:
-        security: DEBUG
+        security: INFO
     root: INFO
 
 acme:

@@ -1,0 +1,23 @@
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+# deals with single and multi-valued JWT claims
+      accept-single-value-as-array: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://sso.tdlabs.local:8899/u/auth/realms/acme
+
+server:
+  port: 20009
+
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO
+    root: INFO
+

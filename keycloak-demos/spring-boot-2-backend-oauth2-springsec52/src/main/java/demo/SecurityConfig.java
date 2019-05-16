@@ -1,4 +1,4 @@
-package demo.config;
+package demo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -9,7 +9,8 @@ import org.springframework.security.access.expression.method.DefaultMethodSecuri
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
-import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 
 @Configuration
 @RequiredArgsConstructor
@@ -30,12 +31,13 @@ class SecurityConfig extends GlobalMethodSecurityConfiguration {
         return expressionHandler;
     }
 
-    /**
-     * allows to use expressions like {@code #security.authentication.name} in Spring Data Queries
-     * @return
-     */
+
     @Bean
-    SecurityEvaluationContextExtension securityEvaluationContextExtension() {
-        return new SecurityEvaluationContextExtension();
+    public GrantedAuthoritiesMapper keycloakAuthoritiesMapper() {
+
+        SimpleAuthorityMapper mapper = new SimpleAuthorityMapper();
+        mapper.setConvertToUpperCase(true);
+        return mapper;
     }
+
 }
