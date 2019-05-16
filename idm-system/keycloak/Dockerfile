@@ -44,6 +44,7 @@ USER jboss
 ADD /modules /opt/jboss/keycloak/modules
 
 ADD /themes/springio18 /opt/jboss/keycloak/themes/springio18
+ADD /themes/springio19 /opt/jboss/keycloak/themes/springio19
 ADD /themes/wjax18 /opt/jboss/keycloak/themes/wjax18
 
 COPY keycloak.jks /opt/jboss/keycloak/standalone/configuration

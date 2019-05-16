@@ -1,0 +1,26 @@
+.login-pf body {
+    background: url("../img/springio19-bg.png") center no-repeat #000;
+    background-size: contain;
+}
+
+.zocial, a.zocial {
+    color: white;
+}
+
+.card-pf {
+    background-color: rgba(133, 122, 122, 0.3);
+    color: white;
+}
+
+.btn-primary {
+    background-color: #159367;
+    background-image: none;
+}
+
+#kc-form-options .checkbox {
+    color: white;
+}
+
+a {
+    color: white;
+}
