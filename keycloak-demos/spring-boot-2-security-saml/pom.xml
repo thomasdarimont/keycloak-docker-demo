@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.vdenotaris.spring</groupId>
-	<artifactId>spring-boot-2-saml</artifactId>
+	<artifactId>spring-boot-2-security-saml</artifactId>
 	<version>2.0.1.RELEASE</version>
 	<packaging>jar</packaging>
 
