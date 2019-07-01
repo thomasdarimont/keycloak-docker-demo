@@ -22,8 +22,6 @@ security:
       jwk:
       # We use dynamic key resolving via JWKS in order to support key rotation
         key-set-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/certs
-#      token-info-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/token/introspect
-#      user-info-uri: ${acme.security.oauth2.issuer-uri}/protocol/openid-connect/userinfo
 
 # If you want this service to call other services on it's own via Oauth2RestTemplate... enable this client config
     client:
