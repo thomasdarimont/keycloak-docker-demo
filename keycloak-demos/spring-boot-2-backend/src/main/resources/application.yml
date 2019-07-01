@@ -28,6 +28,7 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: false
-
+  jmx:
+    enabled: false
 server:
   port: 20000
