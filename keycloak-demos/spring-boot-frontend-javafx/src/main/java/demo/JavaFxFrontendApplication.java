@@ -3,7 +3,7 @@ package demo;
 
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import demo.todos.ui.TodosView;
-import org.keycloak.adapters.installed.KeycloakInstalled;
+//import org.keycloak.adapters.installed.KeycloakInstalled;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.hateoas.config.EnableHypermediaSupport;

@@ -4,5 +4,6 @@
   "ssl-required": "external",
   "resource": "app-frontend-javafx",
   "public-client": true,
-  "use-resource-role-mappings": true
+  "use-resource-role-mappings": true,
+  "enable-pkce": true
 }
