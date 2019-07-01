@@ -1,4 +1,4 @@
-package demo;
+package demo.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -31,9 +31,8 @@ class SecurityConfig extends GlobalMethodSecurityConfiguration {
         return expressionHandler;
     }
 
-
     @Bean
-    public GrantedAuthoritiesMapper keycloakAuthoritiesMapper() {
+    GrantedAuthoritiesMapper keycloakAuthoritiesMapper() {
 
         SimpleAuthorityMapper mapper = new SimpleAuthorityMapper();
         mapper.setConvertToUpperCase(true);

@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-boot-2-backend-oauth2-springsec53</artifactId>
+    <artifactId>spring-boot-2-backend-oauth2-springsec52</artifactId>
 
     <properties>
         <java.version>1.8</java.version>
@@ -37,6 +37,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-resource-server</artifactId>
+            <version>5.2.0.M3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>

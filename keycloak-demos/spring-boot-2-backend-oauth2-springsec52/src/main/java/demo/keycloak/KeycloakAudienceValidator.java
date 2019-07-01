@@ -10,10 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 class KeycloakAudienceValidator implements OAuth2TokenValidator<Jwt> {
 
-    private OAuth2Error error =
-            new OAuth2Error("invalid_token", "Invalid audience", null);
+    private final OAuth2Error ERROR_INVALID_AUDIENCE = new OAuth2Error("invalid_token", "Invalid audience", null);
 
-    @Value("${keycloak.client_id:app-backend-springboot-oauth2}")
+    @Value("${keycloak.clientId}")
     String allowedAudience;
 
     @Override
@@ -21,7 +20,7 @@ class KeycloakAudienceValidator implements OAuth2TokenValidator<Jwt> {
 
 
         if (!jwt.getAudience().contains(allowedAudience)) {
-            return OAuth2TokenValidatorResult.failure(error);
+            return OAuth2TokenValidatorResult.failure(ERROR_INVALID_AUDIENCE);
         }
 
         return OAuth2TokenValidatorResult.success();

@@ -21,3 +21,5 @@ logging:
         security: INFO
     root: INFO
 
+keycloak:
+  clientId: app-backend-springboot-oauth2
