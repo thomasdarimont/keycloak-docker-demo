@@ -15,6 +15,7 @@ keycloak:
   auth-server-url: http://sso.tdlabs.local:8899/u/auth
   # The client-id
   resource: app-frontend-springboot
+  # Client Credentials required, since we are a "Confidential Client"
   credentials:
      secret: 4822a740-20b9-4ff7-bbed-e664f4a70eb6
   ssl-required: external

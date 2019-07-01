@@ -46,7 +46,7 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     /**
-     * Use Keycloak configuration from properties / yaml
+     * Pull Keycloak configuration from properties / yaml
      *
      * @return
      */
@@ -55,6 +55,10 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         return new KeycloakSpringBootConfigResolver();
     }
 
+    /**
+     * Enhance {@link KeycloakAuthenticationProvider} with additional {@link org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper}.
+     * @param auth
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
 
@@ -72,6 +76,28 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
+
+    /**
+     * {@link KeycloakRestTemplate} configured to use {@link AccessToken} of current
+     * user.
+     *
+     * @param requestFactory
+     * @return
+     */
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public KeycloakRestTemplate keycloakRestTemplate(KeycloakClientRequestFactory requestFactory) {
+        return new KeycloakRestTemplate(requestFactory);
+    }
+
+    /**
+     * Ensures the correct registration of KeycloakSpringBootConfigResolver when Keycloaks AutoConfiguration
+     * is explicitly turned off in application.yml {@code keycloak.enabled: false}.
+     */
+    @Configuration
+    static class CustomKeycloakBaseSpringBootConfiguration extends KeycloakBaseSpringBootConfiguration {
+    }
+
 
     /**
      * Returns the {@link KeycloakSecurityContext} from the Spring
@@ -102,26 +128,5 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         }
 
         return null;
-    }
-
-    /**
-     * {@link KeycloakRestTemplate} configured to use {@link AccessToken} of current
-     * user.
-     *
-     * @param requestFactory
-     * @return
-     */
-    @Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public KeycloakRestTemplate keycloakRestTemplate(KeycloakClientRequestFactory requestFactory) {
-        return new KeycloakRestTemplate(requestFactory);
-    }
-
-    /**
-     * Ensures the correct registration of KeycloakSpringBootConfigResolver when Keycloaks AutoConfiguration
-     * is explicitly turned off in application.yml {@code keycloak.enabled: false}.
-     */
-    @Configuration
-    static class CustomKeycloakBaseSpringBootConfiguration extends KeycloakBaseSpringBootConfiguration {
     }
 }
