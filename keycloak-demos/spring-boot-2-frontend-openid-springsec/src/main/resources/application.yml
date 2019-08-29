@@ -1,0 +1,20 @@
+server:
+  port: 20001
+
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: 'app-frontend-springboot'
+            client-secret: '4822a740-20b9-4ff7-bbed-e664f4a70eb6'
+            authorizationGrantType: authorization_code
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: openid
+        provider:
+          keycloak:
+            issuerUri: http://sso.tdlabs.local:8899/u/auth/realms/acme
+            user-name-attribute: preferred_username

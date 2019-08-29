@@ -16,12 +16,8 @@ import java.time.Instant;
 @RequiredArgsConstructor
 class GreetingApiController {
 
-//    private final OAuth2RestOperations oauth2RestTemplate;
-
     @GetMapping("user")
     Object greet(Principal user) {
-
-
         return String.format("Hello %s %s", user.getName(), Instant.now());
     }
 
