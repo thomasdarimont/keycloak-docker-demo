@@ -1,0 +1,7 @@
+<!-- <app-nav></app-nav> -->
+<mat-toolbar color="primary">
+    <span>Keycloak Angular Demo</span>
+    <a mat-button (click)="keycloakService.logout()">Logout</a>
+</mat-toolbar>
+<h1>Hello {{keycloakService.getUsername()}}</h1>
+<router-outlet></router-outlet>
