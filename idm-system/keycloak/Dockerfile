@@ -1,4 +1,4 @@
-FROM jboss/keycloak:7.0.0
+FROM jboss/keycloak:7.0.1
 
 # Keycloak User
 ENV KEYCLOAK_ADMIN_USER admin
