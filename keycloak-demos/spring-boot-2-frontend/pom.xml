@@ -104,6 +104,39 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.31.0</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${project.artifactId}:${project.version}</name>
+                            <alias>${project.artifactId}</alias>
+                            <build>
+                                <from>openjdk:8-jre-alpine</from>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <env>
+                                    <KEYCLOAK_URL>http://sso.tdlabs.local:8899/u/auth</KEYCLOAK_URL>
+                                    <KEYCLOAK_REALM>acme</KEYCLOAK_REALM>
+                                    <KEYCLOAK_CLIENT_ID>app-frontend-springboot</KEYCLOAK_CLIENT_ID>
+                                    <KEYCLOAK_CLIENT_SECRET>4822a740-20b9-4ff7-bbed-e664f4a70eb6</KEYCLOAK_CLIENT_SECRET>
+                                    <TODO_BACKEND_URL>apps.tdlabs.local:20000</TODO_BACKEND_URL>
+                                </env>
+                                <cmd>java -jar maven/${project.name}-${project.version}.jar</cmd>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>docker:build</id>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

@@ -1,8 +1,8 @@
 keycloak:
-  realm: acme
-  auth-server-url: http://sso.tdlabs.local:8899/u/auth
+  realm: ${KEYCLOAK_REALM:acme}
+  auth-server-url: ${KEYCLOAK_URL:http://sso.tdlabs.local:8899/u/auth}
 # client_id
-  resource: app-backend-springboot
+  resource: ${KEYCLOAK_CLIENT_ID:app-backend-springboot}
   bearer-only: true
   ssl-required: external
   principal-attribute: subject
