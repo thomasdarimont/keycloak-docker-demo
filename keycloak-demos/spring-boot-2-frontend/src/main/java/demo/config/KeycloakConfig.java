@@ -16,6 +16,7 @@ import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -26,6 +27,7 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -46,6 +48,16 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     /**
+     * Required to support Session invalidation on backchannel logout!
+     *
+     * @return
+     */
+    @Bean
+    protected ServletListenerRegistrationBean httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
+    }
+
+    /**
      * Pull Keycloak configuration from properties / yaml
      *
      * @return
@@ -57,6 +69,7 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     /**
      * Enhance {@link KeycloakAuthenticationProvider} with additional {@link org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper}.
+     *
      * @param auth
      */
     @Autowired

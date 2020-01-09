@@ -100,6 +100,7 @@ public class Oauth2Client {
 			params.add("scope", "profile");
 			params.add("redirect_uri", oauthProperties.getRedirectUri());
 			params.add("client_id", oauthProperties.getClientId());
+			params.add("thirdparty-username", username);
 		});
 
 		Tokens tokens = requestNewTokens(request);

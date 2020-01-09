@@ -4,8 +4,8 @@ import demo.keycloak.KeycloakLinkGenerator;
 import demo.todo.Todo;
 import demo.todo.TodoClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,7 +45,7 @@ class UiController {
     @GetMapping("/todos*")
     public String todos(Model model, @AuthenticationPrincipal Authentication currentUser) {
 
-        Resources<Resource<Todo>> todos = todoClient.fetchTodos();
+        CollectionModel<EntityModel<Todo>> todos = todoClient.fetchTodos();
         model.addAttribute("todos", todos.getContent());
 
         System.out.printf("Current user roles: %s%n", currentUser.getAuthorities());

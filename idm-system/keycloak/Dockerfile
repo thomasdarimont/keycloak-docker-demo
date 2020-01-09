@@ -1,4 +1,4 @@
-FROM jboss/keycloak:7.0.1
+FROM jboss/keycloak:8.0.1
 
 # Keycloak User
 ENV KEYCLOAK_ADMIN_USER admin
@@ -61,5 +61,6 @@ COPY keycloak-setup.cli /opt/jboss/keycloak
 
 COPY docker-entrypoint.sh /opt/jboss/tools
 COPY keycloak-setup.cli /opt/jboss/tools
+COPY profile.properties /opt/jboss/keycloak/standalone/configuration
 
 CMD ["--server-config", "standalone-ha.xml"]
