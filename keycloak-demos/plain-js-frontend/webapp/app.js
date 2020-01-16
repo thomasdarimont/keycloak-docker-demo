@@ -6,7 +6,7 @@ var keycloak = new Keycloak({
 
 window.onload = function () {
 
-  keycloak.init({onLoad: 'login-required', checkLoginIframe: true, checkLoginIframeInterval: 1})
+  keycloak.init({onLoad: 'login-required', checkLoginIframe: true, checkLoginIframeInterval: 1, pkceMethod: 'S256'})
     .success(function () {
 
       if (keycloak.authenticated) {
