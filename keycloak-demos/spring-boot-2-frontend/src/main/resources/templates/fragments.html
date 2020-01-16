@@ -10,7 +10,7 @@
 
   <script src="/webjars/jquery/jquery.min.js"></script>
   <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-  
+
   <script>
   var pingHandle = setInterval(() => {
     fetch("/ping", { credentials: 'include', redirect: 'manual'}).then(function(response) {
@@ -53,8 +53,11 @@
           <ul class="dropdown-menu">
 
             <li><a href="/account"><span class="glyphicon glyphicon-user"/> Account</a></li>
-            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"/> Logout</a></li>
+            <li><a href="/sso/logout" onclick="logoutForm.submit(); return false;"><span class="glyphicon glyphicon-log-out"/> Logout</a></li>
           </ul>
+          <form id="logoutForm" th:action="@{/sso/logout}" method="POST" class="display:none">
+            <!-- CSRF token will be emitted by Spring Security -->
+          </form>
         </li>
       </ul>
     </div>

@@ -34,6 +34,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.security.Principal;
 
+
 @KeycloakConfiguration
 @EnableConfigurationProperties(KeycloakSpringBootProperties.class)
 class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
@@ -45,16 +46,6 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/account", "/todos*", "/ping").authenticated() //
                 .anyRequest().permitAll() //
         ;
-    }
-
-    /**
-     * Required to support Session invalidation on backchannel logout!
-     *
-     * @return
-     */
-    @Bean
-    protected ServletListenerRegistrationBean httpSessionEventPublisher() {
-        return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
     }
 
     /**
@@ -141,5 +132,13 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         }
 
         return null;
+    }
+
+    /**
+     * Required to support Session invalidation on backchannel logout!
+     */
+    @Bean
+    protected ServletListenerRegistrationBean<?> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
     }
 }
