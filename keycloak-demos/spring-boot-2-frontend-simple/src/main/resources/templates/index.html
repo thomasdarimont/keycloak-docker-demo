@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <h1>Public Area</h1>
 
@@ -9,7 +9,7 @@
 </form>
 
 <h2>
-    Hello <span th:text="${#httpServletRequest?.userPrincipal?.name}?: 'Anonymous'">Anonymous</span>
+    Hello <span sec:authentication="name">Anonymous</span>
 </h2>
 
 <a href="./secured/">To Secured Area</a>

@@ -28,6 +28,8 @@
         <!--        <module>spring-boot-2-webflux-frontend</module>-->
         <module>spring-boot-2-backend-oauth2-springsec52</module>
         <!--        <module>spring-boot-2-frontend-openid-springsec</module>-->
+
+        <module>spring-boot-2-frontend-simple</module>
     </modules>
 
     <dependencyManagement>
