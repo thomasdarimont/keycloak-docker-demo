@@ -1,9 +1,11 @@
 package demo.plain;
 
 import org.keycloak.OAuth2Constants;
+import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -20,6 +22,7 @@ public class KeycloakAdminClientExample {
 
         String serverUrl = "http://sso.tdlabs.local:8899/u/auth";
         String realm = "acme";
+        // idm-client needs to allow "Direct Access Grants: Resource Owner Password Credentials Grant"
         String clientId = "idm-client";
         String clientSecret = "0d61686d-57fc-4048-b052-4ce74978c468";
 
@@ -53,13 +56,13 @@ public class KeycloakAdminClientExample {
 
         // Get realm
         RealmResource realmResource = keycloak.realm(realm);
-        UsersResource userRessource = realmResource.users();
+        UsersResource usersRessource = realmResource.users();
 
         // Create user (requires manage-users role)
-        Response response = userRessource.create(user);
+        Response response = usersRessource.create(user);
         System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
         System.out.println(response.getLocation());
-        String userId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
+        String userId = CreatedResponseUtil.getCreatedId(response);
 
         System.out.printf("User created with userId: %s%n", userId);
 
@@ -69,15 +72,17 @@ public class KeycloakAdminClientExample {
         passwordCred.setType(CredentialRepresentation.PASSWORD);
         passwordCred.setValue("test");
 
+        UserResource userResource = usersRessource.get(userId);
+
         // Set password credential
-        userRessource.get(userId).resetPassword(passwordCred);
+        userResource.resetPassword(passwordCred);
 
 //        // Get realm role "tester" (requires view-realm role)
         RoleRepresentation testerRealmRole = realmResource.roles()//
                 .get("tester").toRepresentation();
 //
 //        // Assign realm role tester to user
-        userRessource.get(userId).roles().realmLevel() //
+        userResource.roles().realmLevel() //
                 .add(Arrays.asList(testerRealmRole));
 //
 //        // Get client
@@ -89,11 +94,14 @@ public class KeycloakAdminClientExample {
                 .roles().get("user").toRepresentation();
 //
 //        // Assign client level role to user
-        userRessource.get(userId).roles() //
+        userResource.roles() //
                 .clientLevel(app1Client.getId()).add(Arrays.asList(userClientRole));
 
         // Send password reset E-Mail
         // VERIFY_EMAIL, UPDATE_PROFILE, CONFIGURE_TOTP, UPDATE_PASSWORD, TERMS_AND_CONDITIONS
-//        userRessource.get(userId).executeActionsEmail(Arrays.asList("UPDATE_PASSWORD"));
+//        usersRessource.get(userId).executeActionsEmail(Arrays.asList("UPDATE_PASSWORD"));
+
+        // Delete User
+//        userResource.remove();
     }
 }
