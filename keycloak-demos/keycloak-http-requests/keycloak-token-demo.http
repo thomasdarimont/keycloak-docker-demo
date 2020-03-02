@@ -1,0 +1,74 @@
+### Obtain tokens via ROPC Grant Flow
+POST {{KC_ISSUER}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{KC_CLIENT_ID}}\
+&client_secret={{KC_CLIENT_SECRET}}\
+&username={{KC_USER_USERNAME}}\
+&password={{KC_USER_PASSWORD}}\
+&grant_type=password\
+&scope=openid
+
+> {%
+client.global.set("KC_ACCESS_TOKEN", response.body.access_token);
+client.global.set("KC_REFRESH_TOKEN", response.body.refresh_token);
+%}
+
+### Obtain User info from User-Info Endpoint
+GET {{KC_ISSUER}}/protocol/openid-connect/userinfo
+Authorization: Bearer {{KC_ACCESS_TOKEN}}
+
+### Obtain Token info from Token Introspection Endpoint
+POST {{KC_ISSUER}}/protocol/openid-connect/token/introspect
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{KC_CLIENT_ID}}\
+&client_secret={{KC_CLIENT_SECRET}}\
+&token={{KC_ACCESS_TOKEN}}\
+&token_type_hint=access_token
+
+### Refresh Tokens
+POST {{KC_ISSUER}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{KC_CLIENT_ID}}\
+&client_secret={{KC_CLIENT_SECRET}}\
+&grant_type=refresh_token\
+&refresh_token={{KC_REFRESH_TOKEN}}
+
+> {%
+client.global.set("KC_ACCESS_TOKEN", response.body.access_token);
+client.global.set("KC_REFRESH_TOKEN", response.body.refresh_token);
+%}
+
+### Client Credentials Grant
+POST {{KC_ISSUER}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{KC_CLIENT_ID}}\
+&client_secret={{KC_CLIENT_SECRET}}\
+&grant_type=client_credentials
+
+> {%
+client.global.set("KC_ACCESS_TOKEN", response.body.access_token);
+client.global.set("KC_REFRESH_TOKEN", response.body.refresh_token);
+%}
+
+
+
+### Authorization Code Grant Flow - Step 1
+#GET {{KC_ISSUER}}/protocol/openid-connect/auth?client_id={{KC_CLIENT_ID}}&redirect_uri={{KC_CLIENT_CALLBACK_URI}}&state={{$uuid}}&response_type=code&scope=openid
+#
+#> {%
+#client.global.set("KC_LOGIN_ACTION_URL", response.body.replace(/.*action="([^\"]*)".*/s,"$1"));
+#
+#client.log("bubu")
+#%}
+#
+### Authorization Code Grant Flow - Step 2
+#POST {{KC_LOGIN_ACTION_URL}}
+#Content-Type: application/x-www-form-urlencoded
+#
+#username={{KC_USER_USERNAME}}&password={{KC_USER_PASSWORD}}&credentialId=
+#
+### Authorization Code Grant Flow - Step 3
