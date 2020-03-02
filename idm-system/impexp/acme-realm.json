@@ -28,7 +28,7 @@
   "verifyEmail" : false,
   "loginWithEmailAllowed" : false,
   "duplicateEmailsAllowed" : false,
-  "resetPasswordAllowed" : true,
+  "resetPasswordAllowed" : false,
   "editUsernameAllowed" : false,
   "bruteForceProtected" : true,
   "permanentLockout" : false,
@@ -596,6 +596,30 @@
   "webAuthnPolicyAvoidSameAuthenticatorRegister" : false,
   "webAuthnPolicyAcceptableAaguids" : [ ],
   "users" : [ {
+    "id" : "3011ec3b-6b16-47aa-9697-20222a5a5c92",
+    "createdTimestamp" : 1582706038407,
+    "username" : "ace/roger",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Roger",
+    "lastName" : "Rabbit",
+    "email" : "tom+roger@localhost",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "federatedIdentities" : [ {
+      "identityProvider" : "ace",
+      "userId" : "b3a2b38b-015e-4b5f-ac65-7b009355b0ab",
+      "userName" : "roger"
+    } ],
+    "realmRoles" : [ "user", "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "account" : [ "view-profile", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "c1d5086b-cce5-41ad-b753-7bd65969f8a4",
     "createdTimestamp" : 1570533469465,
     "username" : "acedummy",
@@ -665,12 +689,18 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "admin", "uma_authorization", "offline_access" ],
+    "realmRoles" : [ "user", "admin", "uma_authorization", "offline_access" ],
     "clientRoles" : {
       "app-frontend-springboot" : [ "admin" ],
       "account" : [ "view-profile", "manage-account" ],
       "app-cli" : [ "admin" ]
     },
+    "clientConsents" : [ {
+      "clientId" : "app-frontend-springboot",
+      "grantedClientScopes" : [ "app-frontend-springboot", "email", "roles", "profile" ],
+      "createdDate" : 1579194723309,
+      "lastUpdatedDate" : 1579194723338
+    } ],
     "notBefore" : 0,
     "groups" : [ ]
   }, {
@@ -722,6 +752,30 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
+    "realmRoles" : [ "user", "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "account" : [ "view-profile", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "c77f56f4-1574-48c6-8e27-acd2b9afcfab",
+    "createdTimestamp" : 1582647667944,
+    "username" : "demo1",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "DemoFirst",
+    "lastName" : "DemoLast",
+    "email" : "tom+demo1@localhost",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "federatedIdentities" : [ {
+      "identityProvider" : "demo-idp",
+      "userId" : "20944e6b-8f32-4e10-a0f3-64e6d6e4b6c6",
+      "userName" : "demo1"
+    } ],
     "realmRoles" : [ "user", "uma_authorization", "offline_access" ],
     "clientRoles" : {
       "account" : [ "view-profile", "manage-account" ]
@@ -810,20 +864,19 @@
     "notBefore" : 0,
     "groups" : [ ]
   }, {
-    "id" : "aa0ce34d-31b6-46db-a43d-5101af04f0bd",
-    "createdTimestamp" : 1508856818013,
+    "id" : "996e2320-c8bd-462f-947d-a3610468980d",
+    "createdTimestamp" : 1582643070693,
     "username" : "service-account-app-frontend-springboot",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
-    "email" : "service-account-app-frontend-springboot@placeholder.org",
     "serviceAccountClientId" : "app-frontend-springboot",
     "credentials" : [ ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "uma_authorization", "offline_access" ],
+    "realmRoles" : [ "user" ],
     "clientRoles" : {
-      "app-frontend-springboot" : [ "system", "user" ],
+      "app-frontend-springboot" : [ "system" ],
       "account" : [ "view-profile", "manage-account" ]
     },
     "notBefore" : 0,
@@ -872,7 +925,7 @@
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
-    "firstName" : "Theodore",
+    "firstName" : "Theo",
     "lastName" : "Tester",
     "email" : "tom+tester@localhost",
     "attributes" : {
@@ -899,6 +952,11 @@
       "app-cli" : [ "user" ]
     },
     "clientConsents" : [ {
+      "clientId" : "app-frontend-plainjs",
+      "grantedClientScopes" : [ "email", "roles", "profile" ],
+      "createdDate" : 1582714002953,
+      "lastUpdatedDate" : 1582714002957
+    }, {
       "clientId" : "app-frontend-springboot",
       "grantedClientScopes" : [ "app-frontend-springboot", "email", "roles", "profile" ],
       "createdDate" : 1570519770577,
@@ -913,6 +971,9 @@
     "groups" : [ ]
   } ],
   "scopeMappings" : [ {
+    "client" : "app-frontend-springboot",
+    "roles" : [ "tester", "admin", "user" ]
+  }, {
     "client" : "app-cli",
     "roles" : [ "offline_access" ]
   }, {
@@ -1118,7 +1179,7 @@
     "webOrigins" : [ "+" ],
     "notBefore" : 0,
     "bearerOnly" : false,
-    "consentRequired" : true,
+    "consentRequired" : false,
     "standardFlowEnabled" : true,
     "implicitFlowEnabled" : false,
     "directAccessGrantsEnabled" : true,
@@ -2300,11 +2361,11 @@
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "2292e8ee-70b9-411a-9617-08452c8f00a7",
-    "redirectUris" : [ "http://apps.tdlabs.local:20002/webapp/*" ],
-    "webOrigins" : [ "http://apps.tdlabs.local:20002" ],
+    "redirectUris" : [ "http://apps.bubu.local:20002/webapp", "/*" ],
+    "webOrigins" : [ "+" ],
     "notBefore" : 0,
     "bearerOnly" : false,
-    "consentRequired" : false,
+    "consentRequired" : true,
     "standardFlowEnabled" : true,
     "implicitFlowEnabled" : false,
     "directAccessGrantsEnabled" : false,
@@ -2317,11 +2378,14 @@
       "saml.force.post.binding" : "false",
       "saml.multivalued.roles" : "false",
       "saml.encrypt" : "false",
-      "saml_force_name_id_format" : "false",
-      "saml.client.signature" : "false",
-      "saml.authnstatement" : "false",
       "saml.server.signature" : "false",
       "saml.server.signature.keyinfo.ext" : "false",
+      "exclude.session.state.from.auth.response" : "false",
+      "saml_force_name_id_format" : "false",
+      "tls.client.certificate.bound.access.tokens" : "false",
+      "saml.client.signature" : "false",
+      "saml.authnstatement" : "false",
+      "display.on.consent.screen" : "false",
       "saml.onetimeuse.condition" : "false"
     },
     "authenticationFlowBindingOverrides" : { },
@@ -3558,6 +3622,20 @@
         "jsonType.label" : "String"
       }
     }, {
+      "id" : "4e8871f0-8298-4c1b-af97-bf9a983b83cb",
+      "name" : "favorite-color-profile",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "userinfo.token.claim" : "true",
+        "user.attribute" : "favorite.color",
+        "id.token.claim" : "false",
+        "access.token.claim" : "false",
+        "claim.name" : "favorite-color-profile",
+        "jsonType.label" : "String"
+      }
+    }, {
       "id" : "b4f90198-63b9-4e20-9ddc-2181aec51ea2",
       "name" : "middle name",
       "protocol" : "openid-connect",
@@ -3947,15 +4025,15 @@
     "providerId" : "keycloak-oidc",
     "enabled" : true,
     "updateProfileFirstLoginMode" : "on",
-    "trustEmail" : false,
+    "trustEmail" : true,
     "storeToken" : false,
     "addReadTokenRoleOnCreate" : false,
     "authenticateByDefault" : false,
     "linkOnly" : false,
-    "firstBrokerLoginFlowAlias" : "custom first broker login",
-    "postBrokerLoginFlowAlias" : "Custom Post Brokered Login",
+    "firstBrokerLoginFlowAlias" : "Custom IdP first broker login",
+    "postBrokerLoginFlowAlias" : "Custom IdP Post Brokered Login",
     "config" : {
-      "hideOnLoginPage" : "true",
+      "hideOnLoginPage" : "false",
       "validateSignature" : "true",
       "userInfoUrl" : "http://sso.tdlabs.local:8899/u/auth/realms/ace/protocol/openid-connect/userinfo",
       "uiLocales" : "true",
@@ -3998,13 +4076,12 @@
     }
   } ],
   "identityProviderMappers" : [ {
-    "id" : "9b543767-27c4-4552-ab29-d6581cbbb016",
-    "name" : "origin",
+    "id" : "e5f6a52e-55bb-4348-a697-af30e354fad4",
+    "name" : "ensure-unique-username",
     "identityProviderAlias" : "ace",
-    "identityProviderMapper" : "hardcoded-user-session-attribute-idp-mapper",
+    "identityProviderMapper" : "oidc-username-idp-mapper",
     "config" : {
-      "attribute.value" : "ace",
-      "attribute" : "idp-origin"
+      "template" : "${ALIAS}/${CLAIM.preferred_username}"
     }
   } ],
   "components" : {
@@ -4128,68 +4205,46 @@
   "supportedLocales" : [ "de", "en", "fr" ],
   "defaultLocale" : "en",
   "authenticationFlows" : [ {
-    "id" : "03b2ca48-88c5-4cb4-934a-9c304e1e325d",
-    "alias" : "Copy of first broker login",
-    "description" : "Actions taken after first broker login with identity provider account, which is not yet linked to any Keycloak account",
+    "id" : "74f4c6a7-4e1d-4f88-96a2-687e363fd2ee",
+    "alias" : "Copy of browser",
+    "description" : "browser based authentication",
     "providerId" : "basic-flow",
     "topLevel" : true,
     "builtIn" : false,
     "authenticationExecutions" : [ {
-      "authenticatorConfig" : "review profile config",
-      "authenticator" : "idp-review-profile",
-      "requirement" : "REQUIRED",
+      "authenticator" : "auth-cookie",
+      "requirement" : "ALTERNATIVE",
       "priority" : 10,
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     }, {
-      "authenticatorConfig" : "create unique user config",
-      "authenticator" : "idp-create-user-if-unique",
-      "requirement" : "ALTERNATIVE",
-      "priority" : 20,
-      "userSetupAllowed" : false,
-      "autheticatorFlow" : false
-    }, {
-      "requirement" : "ALTERNATIVE",
-      "priority" : 30,
-      "flowAlias" : "Copy of first broker login Handle Existing Account",
-      "userSetupAllowed" : false,
-      "autheticatorFlow" : true
-    } ]
-  }, {
-    "id" : "0d0452c2-25b0-4ac6-b8c1-b62278ed0807",
-    "alias" : "Copy of first broker login Handle Existing Account",
-    "description" : "Handle what to do if there is existing account with same email/username like authenticated identity provider",
-    "providerId" : "basic-flow",
-    "topLevel" : false,
-    "builtIn" : false,
-    "authenticationExecutions" : [ {
-      "authenticator" : "idp-email-verification",
-      "requirement" : "ALTERNATIVE",
-      "priority" : 20,
-      "userSetupAllowed" : false,
-      "autheticatorFlow" : false
-    }, {
-      "authenticator" : "idp-auto-link",
+      "authenticator" : "auth-spnego",
       "requirement" : "DISABLED",
-      "priority" : 30,
+      "priority" : 20,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    }, {
+      "authenticator" : "identity-provider-redirector",
+      "requirement" : "ALTERNATIVE",
+      "priority" : 25,
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     }, {
       "requirement" : "ALTERNATIVE",
-      "priority" : 31,
-      "flowAlias" : "Copy of first broker login Verify Existing Account by Re-authentication",
+      "priority" : 30,
+      "flowAlias" : "Copy of browser forms",
       "userSetupAllowed" : false,
       "autheticatorFlow" : true
     } ]
   }, {
-    "id" : "210187da-787c-41d8-b52d-c0936dbbc2e6",
-    "alias" : "Copy of first broker login Verify Existing Account by Re-authentication",
-    "description" : "Reauthentication of existing account",
+    "id" : "2e1338a3-6557-4706-b5c7-796f5322b8b0",
+    "alias" : "Copy of browser forms",
+    "description" : "Username, password, otp and other auth forms.",
     "providerId" : "basic-flow",
     "topLevel" : false,
     "builtIn" : false,
     "authenticationExecutions" : [ {
-      "authenticator" : "idp-username-password-form",
+      "authenticator" : "auth-username-password-form",
       "requirement" : "REQUIRED",
       "priority" : 10,
       "userSetupAllowed" : false,
@@ -4197,13 +4252,13 @@
     }, {
       "requirement" : "CONDITIONAL",
       "priority" : 20,
-      "flowAlias" : "Copy of first broker login Verify Existing Account by Re-authentication - auth-otp-form - Conditional",
+      "flowAlias" : "Copy of browser forms - auth-otp-form - Conditional",
       "userSetupAllowed" : false,
       "autheticatorFlow" : true
     } ]
   }, {
-    "id" : "c1b9c20e-acc4-430d-ad23-46d633ddcfd2",
-    "alias" : "Copy of first broker login Verify Existing Account by Re-authentication - auth-otp-form - Conditional",
+    "id" : "5e6c3768-5cb9-4833-9428-afec9c48b5c6",
+    "alias" : "Copy of browser forms - auth-otp-form - Conditional",
     "description" : "Flow to determine if the auth-otp-form authenticator should be used or not.",
     "providerId" : "basic-flow",
     "topLevel" : false,
@@ -4222,11 +4277,26 @@
       "autheticatorFlow" : false
     } ]
   }, {
-    "id" : "ba5de81a-e52d-48d6-bdaf-024c84a787ae",
-    "alias" : "Custom Post Brokered Login",
+    "id" : "3bcadd1a-5df5-42f8-bca0-21db5729dccf",
+    "alias" : "Custom IdP Post Brokered Login",
     "description" : "",
     "providerId" : "basic-flow",
     "topLevel" : true,
+    "builtIn" : false,
+    "authenticationExecutions" : [ {
+      "authenticator" : "registration-page-form",
+      "requirement" : "ALTERNATIVE",
+      "priority" : 1,
+      "flowAlias" : "Custom IdP Post Brokered Login Custom Post Brokered Login Flow",
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : true
+    } ]
+  }, {
+    "id" : "d0a56017-5763-4a06-8424-5d8632da2956",
+    "alias" : "Custom IdP Post Brokered Login Custom Post Brokered Login Flow",
+    "description" : "",
+    "providerId" : "basic-flow",
+    "topLevel" : false,
     "builtIn" : false,
     "authenticationExecutions" : [ {
       "authenticatorConfig" : "script-auth-user-post-broker-login",
@@ -4235,6 +4305,95 @@
       "priority" : 0,
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
+    } ]
+  }, {
+    "id" : "500df074-f2d9-40f0-a94a-88c56ae29079",
+    "alias" : "Custom IdP first broker login",
+    "description" : "Actions taken after first broker login with identity provider account, which is not yet linked to any Keycloak account",
+    "providerId" : "basic-flow",
+    "topLevel" : true,
+    "builtIn" : false,
+    "authenticationExecutions" : [ {
+      "requirement" : "REQUIRED",
+      "priority" : 20,
+      "flowAlias" : "Custom IdP first broker login first broker login - Alternatives - 0",
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : true
+    } ]
+  }, {
+    "id" : "28525ab5-8579-4a03-89b8-0e6fe91d91f0",
+    "alias" : "Custom IdP first broker login Handle Existing Account",
+    "description" : "Handle what to do if there is existing account with same email/username like authenticated identity provider",
+    "providerId" : "basic-flow",
+    "topLevel" : false,
+    "builtIn" : false,
+    "authenticationExecutions" : [ {
+      "authenticator" : "idp-auto-link",
+      "requirement" : "REQUIRED",
+      "priority" : 21,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    } ]
+  }, {
+    "id" : "fe356378-2d77-4eab-998a-89f5842dd474",
+    "alias" : "Custom IdP first broker login Verify Existing Account by Re-authentication",
+    "description" : "Reauthentication of existing account",
+    "providerId" : "basic-flow",
+    "topLevel" : false,
+    "builtIn" : false,
+    "authenticationExecutions" : [ {
+      "authenticator" : "idp-username-password-form",
+      "requirement" : "REQUIRED",
+      "priority" : 10,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    }, {
+      "requirement" : "CONDITIONAL",
+      "priority" : 20,
+      "flowAlias" : "Custom IdP first broker login Verify Existing Account by Re-authentication - auth-otp-form - Conditional",
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : true
+    } ]
+  }, {
+    "id" : "add70472-18de-439b-84ce-c1f59a47d86a",
+    "alias" : "Custom IdP first broker login Verify Existing Account by Re-authentication - auth-otp-form - Conditional",
+    "description" : "Flow to determine if the auth-otp-form authenticator should be used or not.",
+    "providerId" : "basic-flow",
+    "topLevel" : false,
+    "builtIn" : false,
+    "authenticationExecutions" : [ {
+      "authenticator" : "conditional-user-configured",
+      "requirement" : "REQUIRED",
+      "priority" : 10,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    }, {
+      "authenticator" : "auth-otp-form",
+      "requirement" : "REQUIRED",
+      "priority" : 20,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    } ]
+  }, {
+    "id" : "9c6f7f3c-f276-435f-a028-7bddfd10e759",
+    "alias" : "Custom IdP first broker login first broker login - Alternatives - 0",
+    "description" : "Subflow of first broker login with alternative executions",
+    "providerId" : "basic-flow",
+    "topLevel" : false,
+    "builtIn" : false,
+    "authenticationExecutions" : [ {
+      "authenticatorConfig" : "create unique user config",
+      "authenticator" : "idp-create-user-if-unique",
+      "requirement" : "ALTERNATIVE",
+      "priority" : 10,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    }, {
+      "requirement" : "ALTERNATIVE",
+      "priority" : 20,
+      "flowAlias" : "Custom IdP first broker login Handle Existing Account",
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : true
     } ]
   }, {
     "id" : "a35e616d-7794-4f7e-82fe-cc206262827a",
@@ -4250,14 +4409,28 @@
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     }, {
+      "requirement" : "REQUIRED",
+      "priority" : 20,
+      "flowAlias" : "Handle Existing Account - Alternatives - 0",
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : true
+    } ]
+  }, {
+    "id" : "ae585448-54bf-4835-a4e7-749207484609",
+    "alias" : "Handle Existing Account - Alternatives - 0",
+    "description" : "Subflow of Handle Existing Account with alternative executions",
+    "providerId" : "basic-flow",
+    "topLevel" : false,
+    "builtIn" : true,
+    "authenticationExecutions" : [ {
       "authenticator" : "idp-email-verification",
       "requirement" : "ALTERNATIVE",
-      "priority" : 20,
+      "priority" : 10,
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     }, {
       "requirement" : "ALTERNATIVE",
-      "priority" : 30,
+      "priority" : 20,
       "flowAlias" : "Verify Existing Account by Re-authentication",
       "userSetupAllowed" : false,
       "autheticatorFlow" : true
@@ -4351,27 +4524,6 @@
       "authenticator" : "client-jwt",
       "requirement" : "ALTERNATIVE",
       "priority" : 20,
-      "userSetupAllowed" : false,
-      "autheticatorFlow" : false
-    } ]
-  }, {
-    "id" : "8f5566cd-c5ed-4f93-b448-875f4b2967b4",
-    "alias" : "custom first broker login",
-    "description" : "Actions taken after first broker login with identity provider account, which is not yet linked to any Keycloak account",
-    "providerId" : "basic-flow",
-    "topLevel" : true,
-    "builtIn" : false,
-    "authenticationExecutions" : [ {
-      "authenticatorConfig" : "create unique user config",
-      "authenticator" : "idp-create-user-if-unique",
-      "requirement" : "ALTERNATIVE",
-      "priority" : 20,
-      "userSetupAllowed" : false,
-      "autheticatorFlow" : false
-    }, {
-      "authenticator" : "idp-auto-link",
-      "requirement" : "REQUIRED",
-      "priority" : 30,
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     } ]
@@ -4490,15 +4642,29 @@
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     }, {
+      "requirement" : "REQUIRED",
+      "priority" : 20,
+      "flowAlias" : "first broker login - Alternatives - 0",
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : true
+    } ]
+  }, {
+    "id" : "151d4d84-4082-466c-a583-3cc3a775aeb8",
+    "alias" : "first broker login - Alternatives - 0",
+    "description" : "Subflow of first broker login with alternative executions",
+    "providerId" : "basic-flow",
+    "topLevel" : false,
+    "builtIn" : true,
+    "authenticationExecutions" : [ {
       "authenticatorConfig" : "create unique user config",
       "authenticator" : "idp-create-user-if-unique",
       "requirement" : "ALTERNATIVE",
-      "priority" : 20,
+      "priority" : 10,
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     }, {
       "requirement" : "ALTERNATIVE",
-      "priority" : 30,
+      "priority" : 20,
       "flowAlias" : "Handle Existing Account",
       "userSetupAllowed" : false,
       "autheticatorFlow" : true
@@ -4677,11 +4843,12 @@
       "update.profile.on.first.login" : "missing"
     }
   }, {
-    "id" : "2afe87ca-4567-47e5-98e6-9cb2f4007eff",
+    "id" : "366f4a53-1be4-40ee-a659-5df97f4f2947",
     "alias" : "script-auth-user-post-broker-login",
     "config" : {
       "scriptName" : "script-auth-user-post-broker-login.js",
-      "scriptCode" : "/*\n * Template for JavaScript based authenticator's.\n * See org.keycloak.authentication.authenticators.browser.ScriptBasedAuthenticatorFactory\n */\n\n// import enum for error lookup\nAuthenticationFlowError = Java.type(\"org.keycloak.authentication.AuthenticationFlowError\");\n\n/**\n * An example authenticate function.\n *\n * The following variables are available for convenience:\n * user - current user {@see org.keycloak.models.UserModel}\n * realm - current realm {@see org.keycloak.models.RealmModel}\n * session - current KeycloakSession {@see org.keycloak.models.KeycloakSession}\n * httpRequest - current HttpRequest {@see org.jboss.resteasy.spi.HttpRequest}\n * script - current script {@see org.keycloak.models.ScriptModel}\n * authenticationSession - current authentication session {@see org.keycloak.sessions.AuthenticationSessionModel}\n * LOG - current logger {@see org.jboss.logging.Logger}\n *\n * You one can extract current http request headers via:\n * httpRequest.getHttpHeaders().getHeaderString(\"Forwarded\")\n *\n * @param context {@see org.keycloak.authentication.AuthenticationFlowContext}\n */\nfunction authenticate(context) {\n\n    var username = user ? user.username : \"anonymous\";\n    LOG.info(script.name + \" trace auth for: \" + username);\n\n    var cloudClientIds = [\"app-frontend-plainjs\"];\n    \n    var currentClient = authenticationSession.getClient();\n    var isRestrictedClient = cloudClientIds.indexOf(currentClient.clientId) >= 0;\n    \n    if (!isRestrictedClient) {\n        // allow access to unrestricted client\n        LOG.info(\"login success for \" + username);\n        context.success();\n        return;\n    }\n    \n    // perform additional checks for access to restricted client\n    var cloudRole = realm.getRole(\"tester\");\n    var authShouldSuccess = user.hasRole(cloudRole);\n    if (authShouldSuccess) {\n        LOG.info(\"login success for \" + username);\n        context.success();\n    } else {\n        LOG.info(script.name + \" access denied for restricted cloud client: username: \" + username + \" clientId: \" + currentClient.clientId);\n        context.failure(AuthenticationFlowError.INVALID_USER);\n    }\n}"
+      "scriptCode" : "/*\n * Template for JavaScript based authenticator's.\n * See org.keycloak.authentication.authenticators.browser.ScriptBasedAuthenticatorFactory\n */\n\n// import enum for error lookup\nAuthenticationFlowError = Java.type(\"org.keycloak.authentication.AuthenticationFlowError\");\n\n/**\n * An example authenticate function.\n *\n * The following variables are available for convenience:\n * user - current user {@see org.keycloak.models.UserModel}\n * realm - current realm {@see org.keycloak.models.RealmModel}\n * session - current KeycloakSession {@see org.keycloak.models.KeycloakSession}\n * httpRequest - current HttpRequest {@see org.jboss.resteasy.spi.HttpRequest}\n * script - current script {@see org.keycloak.models.ScriptModel}\n * authenticationSession - current authentication session {@see org.keycloak.sessions.AuthenticationSessionModel}\n * LOG - current logger {@see org.jboss.logging.Logger}\n *\n * You one can extract current http request headers via:\n * httpRequest.getHttpHeaders().getHeaderString(\"Forwarded\")\n *\n * @param context {@see org.keycloak.authentication.AuthenticationFlowContext}\n */\nfunction authenticate(context) {\n\n    var username = user ? user.username : \"anonymous\";\n    LOG.info(script.name + \" trace auth for: \" + username);\n\n    var cloudClientIds = [\"app-frontend-plainjs\"];\n    \n    var currentClient = authenticationSession.getClient();\n    var isRestrictedClient = cloudClientIds.indexOf(currentClient.clientId) >= 0;\n    \n    if (!isRestrictedClient) {\n        // allow access to unrestricted client\n        LOG.info(\"login success for \" + username);\n        context.success();\n        return;\n    }\n    \n    LOG.info(script.name + \" perform additional checks for access to restricted client \" + currentClient.clientId + \" for user: \" + username);\n    LOG.info(script.name + \" login success for \" + username);\n    context.success();\n    \n    /*\n    // perform additional checks for access to restricted client\n    var cloudRole = realm.getRole(\"tester\");\n    var authShouldSuccess = user.hasRole(cloudRole);\n    if (authShouldSuccess) {\n        LOG.info(\"login success for \" + username);\n        context.success();\n    } else {\n        LOG.info(script.name + \" access denied for restricted cloud client: username: \" + username + \" clientId: \" + currentClient.clientId);\n        context.failure(AuthenticationFlowError.INVALID_USER);\n    }\n    */\n}",
+      "scriptDescription" : "Optionally restrict usable clients for Brokered Users"
     }
   } ],
   "requiredActions" : [ {
@@ -4763,6 +4930,6 @@
     "waitIncrementSeconds" : "60",
     "offlineSessionMaxLifespanEnabled" : "false"
   },
-  "keycloakVersion" : "8.0.1",
+  "keycloakVersion" : "8.0.2",
   "userManagedAccessAllowed" : false
 }
