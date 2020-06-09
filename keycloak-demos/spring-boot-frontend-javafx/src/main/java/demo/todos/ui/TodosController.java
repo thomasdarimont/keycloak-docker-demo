@@ -15,8 +15,6 @@
  */
 package demo.todos.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import de.felixroske.jfxsupport.FXMLController;
 import demo.JavaFxFrontendApplication;
 import demo.todos.Todo;
@@ -30,6 +28,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author Thomas Darimont
@@ -38,62 +39,78 @@ import javafx.scene.control.cell.PropertyValueFactory;
 @SuppressWarnings("restriction")
 public class TodosController {
 
-	@FXML
-	Label currentUsernameLabel;
+    @FXML
+    Label currentUsernameLabel;
 
-	@FXML
-	Button logoutButton;
+    @FXML
+    Button logoutButton;
 
-	@FXML
-	TableView<Todo> todosTable;
+    @FXML
+    TableView<Todo> todosTable;
 
-	@FXML
-	TableColumn<Todo, String> todoNameColumn;
-	
-	@FXML
-	TableColumn<Todo, String> todoDescriptionColumn;
-	
-	@FXML
-	TableColumn<Todo, String> todoCompletedColumn;
+    @FXML
+    TableColumn<Todo, String> todoNameColumn;
 
-	@Autowired
-	TodoService todoTrackingService;
+    @FXML
+    TableColumn<Todo, String> todoDescriptionColumn;
 
-	@FXML
-	public void initialize() {
+    @FXML
+    TableColumn<Todo, String> todoCompletedColumn;
 
-		currentUsernameLabel.setText("User: " + JavaFxFrontendApplication.KEYCLOAK.getIdToken().getPreferredUsername());
-		logoutButton.setOnAction(this::doLogout);
+    @Autowired
+    TodoService todoTrackingService;
 
-		configureProjectsTable();
+    @FXML
+    public void initialize() {
 
-		for (Todo todo : todoTrackingService.findMyTodos()) {
-			todosTable.getItems().add(todo);
-		}
+        currentUsernameLabel.setText("User: " + JavaFxFrontendApplication.KEYCLOAK.getIdToken().getPreferredUsername());
+        logoutButton.setOnAction(this::doLogout);
 
-		todosTable.getSelectionModel().selectFirst();
-	}
+        configureTodosTable();
 
-	private void doLogout(ActionEvent evt) {
+        Task<List<Todo>> task = new Task<>() {
+            @Override
+            protected List<Todo> call() {
+                System.out.println("Find todos...");
+                return todoTrackingService.findMyTodos();
+            }
+        };
 
-		logoutButton.setDisable(true);
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
 
-		Task<Void> logoutTask = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				JavaFxFrontendApplication.KEYCLOAK.logout();
-				Platform.exit();
-				return null;
-			}
-		};
+        task.setOnSucceeded(e -> {
+            Object value = e.getSource().getValue();
+            List<Todo> todos = (List<Todo>) value;
+            for (Todo todo : todos) {
+                todosTable.getItems().add(todo);
+            }
 
-		new Thread(logoutTask).start();
-	}
+            todosTable.getSelectionModel().selectFirst();
+        });
+    }
 
-	private void configureProjectsTable() {
+    private void doLogout(ActionEvent evt) {
 
-		todoNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-		todoDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-		todoCompletedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
-	}
+        logoutButton.setDisable(true);
+
+        Task<Void> logoutTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                JavaFxFrontendApplication.KEYCLOAK.logout();
+                Platform.exit();
+                return null;
+            }
+        };
+
+        new Thread(logoutTask).start();
+    }
+
+    private void configureTodosTable() {
+
+        todoNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        todoDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        todoCompletedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
+    }
 }

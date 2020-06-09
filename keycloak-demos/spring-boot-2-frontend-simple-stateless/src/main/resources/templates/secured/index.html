@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<h1>Secured Area (Stateless)</h1>
+
+<form th:action="@{/sso/logout}" method="POST">
+    <!-- CSRF token will be emitted by Spring Security -->
+    <input type="submit" value="Logout"/>
+</form>
+
+<h2>
+    Hello <span sec:authentication="name">Anonymous</span>
+</h2>
+
+<a href="/">To Public Area</a>
+<a href="/secured/admin">To Admin Area</a>
+
+</html>

@@ -1,5 +1,6 @@
 server:
   port: 20001
+  max-http-header-size: 2MB
 
 spring:
   main:
@@ -22,8 +23,11 @@ keycloak:
   principal-attribute: preferred_username
   use-resource-role-mappings: true
   token-minimum-time-to-live: 30
+#  token-store: COOKIE
+#  token-cookie-path: "/"
 #  client-keystore: ../../idm-system/keycloak/keycloak.jks
 #  client-keystore-password: changeit
+
 
 todo-backend:
   server: http://apps.tdlabs.local:20000

@@ -32,4 +32,6 @@ public class Todo {
   private String name;
 
   private boolean completed;
+
+  private String description;
 }

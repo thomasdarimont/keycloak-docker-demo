@@ -5,18 +5,22 @@ import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakBaseSpringBootConfiguration;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolverWrapper;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
 import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
+import org.keycloak.adapters.springsecurity.config.KeycloakSpringConfigResolverWrapper;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
+import org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -25,8 +29,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -41,6 +47,7 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         super.configure(http);
         http.authorizeRequests() //
                 .antMatchers("/account", "/todos*", "/ping").authenticated() //
@@ -56,6 +63,16 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Bean
     public KeycloakConfigResolver keycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();
+    }
+
+    @Autowired
+    public void initKeycloakConfigResolver(KeycloakSpringBootProperties keycloakSpringBootProperties, ApplicationContext context) {
+
+        KeycloakSpringBootConfigResolverWrapper.setAdapterConfig(keycloakSpringBootProperties);
+        KeycloakSpringBootConfigResolverWrapper.setApplicationContext(context);
+
+        // trigger wiring of KeycloakSpringBootConfigResolver, what an API...
+        new KeycloakSpringBootConfigResolverWrapper();
     }
 
     /**
@@ -93,15 +110,6 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     public KeycloakRestTemplate keycloakRestTemplate(KeycloakClientRequestFactory requestFactory) {
         return new KeycloakRestTemplate(requestFactory);
     }
-
-    /**
-     * Ensures the correct registration of KeycloakSpringBootConfigResolver when Keycloaks AutoConfiguration
-     * is explicitly turned off in application.yml {@code keycloak.enabled: false}.
-     */
-    @Configuration
-    static class CustomKeycloakBaseSpringBootConfiguration extends KeycloakBaseSpringBootConfiguration {
-    }
-
 
     /**
      * Returns the {@link KeycloakSecurityContext} from the Spring

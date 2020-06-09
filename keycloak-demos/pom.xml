@@ -14,7 +14,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <keycloak.version>8.0.2</keycloak.version>
+        <keycloak.version>10.0.2</keycloak.version>
     </properties>
 
     <modules>
@@ -30,6 +30,8 @@
         <!--        <module>spring-boot-2-frontend-openid-springsec</module>-->
 
         <module>spring-boot-2-frontend-simple</module>
+        <module>spring-boot-2-frontend-simple-stateless</module>
+        <module>spring-boot-23-backend-oauth2-springsec52</module>
     </modules>
 
     <dependencyManagement>

@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ class TodoServiceImpl implements TodoService {
 	public List<Todo> findMyTodos() {
 
 		List<Todo> todos = todoClient.fetchTodos().getContent() //
-				.stream().map(Resource::getContent).collect(toList());
+				.stream().map(EntityModel::getContent).collect(toList());
 
 		return todos;
 	}

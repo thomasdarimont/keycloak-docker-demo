@@ -105,3 +105,23 @@ services:
 #      - /var/run/docker.sock:/var/run/docker.sock
 #    links:
 #      - idm-keycloak
+  grafana:
+    image: grafana/grafana:7.0.0
+    ports:
+      - 3000:3000
+    user: "104"
+    depends_on:
+      - idm-keycloak
+    environment:
+      GF_AUTH_GENERIC_OAUTH_ENABLED: 'True'
+      GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: 'True'
+      GF_AUTH_GENERIC_OAUTH_ALLOWED_DOMAINS: '0.0.0.0'
+      GF_SERVER_ENFORCE_DOMAIN: 'True'
+      GF_AUTH_GENERIC_OAUTH_ALLOWED_DOMAINS: sso.tdlabs.local localhost idm-keycloak
+      GF_AUTH_GENERIC_OAUTH_NAME: acme
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: 768c6484-6086-4595-a819-0464f6b97dca
+      GF_AUTH_GENERIC_OAUTH_SCOPES: openid profile email
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: http://sso.tdlabs.local:8899/u/auth/realms/acme/protocol/openid-connect/auth
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: http://idm-keycloak:8080/u/auth/realms/acme/protocol/openid-connect/token
+      GF_AUTH_GENERIC_OAUTH_API_URL: http://idm-keycloak:8080/u/auth/realms/acme/protocol/openid-connect/userinfo
