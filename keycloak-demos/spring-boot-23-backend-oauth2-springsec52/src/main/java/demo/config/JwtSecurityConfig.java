@@ -30,6 +30,7 @@ class JwtSecurityConfig {
 
     /**
      * Configures a decoder with the specified validators (validation key fetched from JWKS endpoint)
+     *
      * @param validators validators for the given key
      * @param properties key properties (provides JWK location)
      * @return the decoder bean
@@ -49,7 +50,7 @@ class JwtSecurityConfig {
 
     /**
      * Configures the token validator. Specifies two validation constraints:
-     *
+     * <p>
      * * Timestamp on the token is still valid
      * * The issuer is the expected entity
      *

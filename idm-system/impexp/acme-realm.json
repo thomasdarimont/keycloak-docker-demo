@@ -17,6 +17,8 @@
   "offlineSessionMaxLifespan" : 5184000,
   "clientSessionIdleTimeout" : 0,
   "clientSessionMaxLifespan" : 0,
+  "clientOfflineSessionIdleTimeout" : 0,
+  "clientOfflineSessionMaxLifespan" : 0,
   "accessCodeLifespan" : 60,
   "accessCodeLifespanUserAction" : 300,
   "accessCodeLifespanLogin" : 1800,
@@ -24,13 +26,13 @@
   "actionTokenGeneratedByUserLifespan" : 300,
   "enabled" : true,
   "sslRequired" : "external",
-  "registrationAllowed" : false,
+  "registrationAllowed" : true,
   "registrationEmailAsUsername" : false,
   "rememberMe" : false,
   "verifyEmail" : false,
   "loginWithEmailAllowed" : false,
   "duplicateEmailsAllowed" : false,
-  "resetPasswordAllowed" : false,
+  "resetPasswordAllowed" : true,
   "editUsernameAllowed" : false,
   "bruteForceProtected" : true,
   "permanentLockout" : false,
@@ -763,6 +765,36 @@
     "notBefore" : 0,
     "groups" : [ ]
   }, {
+    "id" : "8cab2ef6-de55-42f1-a66a-0b20e576db35",
+    "createdTimestamp" : 1594891175295,
+    "username" : "auser",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "Arn",
+    "lastName" : "Tes",
+    "email" : "tom+auser@local",
+    "credentials" : [ {
+      "id" : "caf65fdb-0a5f-4804-95f5-c252a64c9430",
+      "type" : "password",
+      "createdDate" : 1594891183154,
+      "secretData" : "{\"value\":\"7hN2HLS2ZfK1oNhDvxZt+A4Jm07axaB21OYBP7FLLEbWl06tamo+34JxVPv7RuL/0vD8i7sqLY63uJo62X3FkQ==\",\"salt\":\"Rir7UCLMxr3kpK1o0WyLCA==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "federatedIdentities" : [ {
+      "identityProvider" : "ace",
+      "userId" : "267169ac-2e2d-4d1c-b115-a03f50c2400a",
+      "userName" : "arndt"
+    } ],
+    "realmRoles" : [ "user", "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "account" : [ "view-profile", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "959d36b7-da7d-4661-90d4-273e0340f636",
     "createdTimestamp" : 1561976708575,
     "username" : "aventura",
@@ -990,7 +1022,7 @@
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
-    "firstName" : "Theodore",
+    "firstName" : "Theo",
     "lastName" : "Tester",
     "email" : "tom+tester@localhost",
     "attributes" : {
@@ -1020,8 +1052,8 @@
     "clientConsents" : [ {
       "clientId" : "app-frontend-plainjs",
       "grantedClientScopes" : [ "email", "roles", "profile" ],
-      "createdDate" : 1582714002953,
-      "lastUpdatedDate" : 1582714002957
+      "createdDate" : 1594294729896,
+      "lastUpdatedDate" : 1594294729905
     }, {
       "clientId" : "app-frontend-springboot",
       "grantedClientScopes" : [ "app-frontend-springboot", "email", "roles", "profile" ],
@@ -3249,6 +3281,42 @@
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : true,
     "nodeReRegistrationTimeout" : -1,
+    "protocolMappers" : [ {
+      "id" : "17529f58-e942-4cc8-b9bb-835253dc0a5b",
+      "name" : "X500 email",
+      "protocol" : "saml",
+      "protocolMapper" : "saml-user-property-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "user.attribute" : "email",
+        "friendly.name" : "email",
+        "attribute.name" : "urn:oid:1.2.840.113549.1.9.1"
+      }
+    }, {
+      "id" : "7a1ffaba-b3db-4f47-b5b7-d3b2e3598824",
+      "name" : "X500 givenName",
+      "protocol" : "saml",
+      "protocolMapper" : "saml-user-property-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "attribute.nameformat" : "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
+        "user.attribute" : "firstName",
+        "friendly.name" : "givenName",
+        "attribute.name" : "urn:oid:2.5.4.42"
+      }
+    }, {
+      "id" : "c2adf7b6-e8c7-40db-8606-e98de2ffd65b",
+      "name" : "X500 surname",
+      "protocol" : "saml",
+      "protocolMapper" : "saml-user-property-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "attribute.nameformat" : "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
+        "user.attribute" : "lastName",
+        "friendly.name" : "surname",
+        "attribute.name" : "urn:oid:2.5.4.4"
+      }
+    } ],
     "defaultClientScopes" : [ "web-origins", "role_list", "profile", "roles", "email" ],
     "optionalClientScopes" : [ "address", "phone", "offline_access" ]
   }, {
@@ -4215,7 +4283,7 @@
     "firstBrokerLoginFlowAlias" : "Custom IdP first broker login",
     "postBrokerLoginFlowAlias" : "Custom IdP Post Brokered Login",
     "config" : {
-      "hideOnLoginPage" : "true",
+      "hideOnLoginPage" : "false",
       "validateSignature" : "true",
       "userInfoUrl" : "http://sso.tdlabs.local:8899/u/auth/realms/ace/protocol/openid-connect/userinfo",
       "uiLocales" : "true",
@@ -4228,6 +4296,7 @@
       "authorizationUrl" : "http://sso.tdlabs.local:8899/u/auth/realms/ace/protocol/openid-connect/auth",
       "clientAuthMethod" : "client_secret_post",
       "logoutUrl" : "http://sso.tdlabs.local:8899/u/auth/realms/ace/protocol/openid-connect/logout",
+      "syncMode" : "LEGACY",
       "clientSecret" : "b09da633-d1ff-4fbe-a63e-e4e1e04dbc00",
       "defaultScope" : "openid"
     }
@@ -5085,7 +5154,10 @@
   "resetCredentialsFlow" : "reset credentials",
   "clientAuthenticationFlow" : "clients",
   "dockerAuthenticationFlow" : "docker auth",
-  "attributes" : { },
-  "keycloakVersion" : "10.0.2",
+  "attributes" : {
+    "clientSessionIdleTimeout" : "0",
+    "clientSessionMaxLifespan" : "0"
+  },
+  "keycloakVersion" : "11.0.2",
   "userManagedAccessAllowed" : false
 }

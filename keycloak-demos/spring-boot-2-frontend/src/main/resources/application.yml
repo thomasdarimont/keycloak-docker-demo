@@ -23,6 +23,7 @@ keycloak:
   principal-attribute: preferred_username
   use-resource-role-mappings: true
   token-minimum-time-to-live: 30
+#  enable-basic-auth: false
 #  token-store: COOKIE
 #  token-cookie-path: "/"
 #  client-keystore: ../../idm-system/keycloak/keycloak.jks
