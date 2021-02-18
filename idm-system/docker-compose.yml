@@ -5,7 +5,7 @@ services:
   mongo:
     image: "mongo:3.2.12"
     volumes:
-      - ./data/mongodb/data:/data/db
+      - ./data/mongodb/data:/data/db:z
 
   elasticsearch:
     image: "elasticsearch:5.6.10"
@@ -13,7 +13,7 @@ services:
     ports:
       - "127.0.0.1:9200:9200"
     volumes:
-      - ./data/elasticsearch/data:/usr/share/elasticsearch/data
+      - ./data/elasticsearch/data:/usr/share/elasticsearch/data:z
 
 # see https://hub.docker.com/r/graylog2/server/
   graylog:
@@ -31,7 +31,7 @@ services:
       - "127.0.0.1:12123:12123/udp"
       - "127.0.0.1:12124:12124"
     volumes:
-      - ./data/graylog/data/journal:/usr/share/graylog/data/journal
+      - ./data/graylog/data/journal:/usr/share/graylog/data/journal:z
 #      - ./data/graylog/config:/usr/share/graylog/data/config      
 
   idm-db:
@@ -43,7 +43,7 @@ services:
     ports:
       - "127.0.0.1:55432:5432"
     volumes:
-      - ./data/postgres/data:/var/lib/postgresql/data
+      - ./data/postgres/data:/var/lib/postgresql/data:z
 
   idm-amq:
     image: rmohr/activemq:5.14.5-alpine
@@ -51,7 +51,7 @@ services:
       - "127.0.0.1:8161:8161"
     volumes:
 #      - ./data/activemq/conf:/opt/activemq/conf
-      - ./data/activemq/data:/var/activemq/data
+      - ./data/activemq/data:/var/activemq/data:z
 
   idm-keycloak:
     build: ./keycloak
@@ -78,7 +78,7 @@ services:
       - idm-amq
       - idm-db
     volumes:
-      - ./impexp:/opt/jboss/keycloak/impexp
+      - ./impexp:/opt/jboss/keycloak/impexp:z
 
   mailserver:
     image: mailhog/mailhog@sha256:98c7e2e6621c897ad86f31610d756d76b8ee622c354c28a76f4ed49fb6ed996f

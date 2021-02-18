@@ -8,9 +8,13 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.security.Principal;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -35,12 +39,12 @@ class UiController {
     }
 
     @GetMapping("/todos*")
-    public String todos(Model model, @AuthenticationPrincipal Authentication currentUser) {
+    public String todos(Model model, @CurrentSecurityContext SecurityContext securityContext) {
 
         CollectionModel<EntityModel<Todo>> todos = todoClient.fetchTodos();
         model.addAttribute("todos", todos.getContent());
 
-        System.out.printf("Current user roles: %s%n", currentUser.getAuthorities());
+        System.out.printf("Current user roles: %s%n", securityContext.getAuthentication().getAuthorities());
 
         return "todos";
     }

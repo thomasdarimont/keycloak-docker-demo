@@ -17,17 +17,9 @@ echo $KC_RESPONSE | jq -C .
 KC_ACCESS_TOKEN=$(echo $KC_RESPONSE | jq -r .access_token)
 
 
-curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/simple/hello
+curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/userdata/current
 
-curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/simple/claims | jq -C .
-
-curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/simple/email
-
-
-curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/resources/42
-
-curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/resources/42/admin
-
+curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/userdata/42
 
 KC_CLIENT_ID=app-cli
 KC_ISSUER=http://sso.tdlabs.local:8899/u/auth/realms/acme
@@ -47,4 +39,4 @@ echo $KC_RESPONSE | jq -C .
 
 KC_ACCESS_TOKEN=$(echo $KC_RESPONSE | jq -r .access_token)
 
-curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/resources/42/admin
+curl -v -H "Authorization: Bearer $KC_ACCESS_TOKEN" http://localhost:30001/api/userdata/42

@@ -802,7 +802,7 @@
     "totp" : false,
     "emailVerified" : false,
     "firstName" : "Ace",
-    "lastName" : "Ventura",
+    "lastName" : "Ventura2",
     "email" : "tom+aceventura@localhost",
     "attributes" : {
       "locale" : [ "en" ]
@@ -821,9 +821,9 @@
     },
     "clientConsents" : [ {
       "clientId" : "app-frontend-plainjs",
-      "grantedClientScopes" : [ "email", "roles", "profile" ],
+      "grantedClientScopes" : [ "phone", "email", "roles", "profile" ],
       "createdDate" : 1583321884285,
-      "lastUpdatedDate" : 1583321884304
+      "lastUpdatedDate" : 1613494362773
     } ],
     "notBefore" : 0,
     "groups" : [ ]
@@ -1021,15 +1021,17 @@
     "username" : "tester",
     "enabled" : true,
     "totp" : false,
-    "emailVerified" : false,
+    "emailVerified" : true,
     "firstName" : "Theo",
     "lastName" : "Tester",
     "email" : "tom+tester@localhost",
     "attributes" : {
-      "favorite.color" : [ "blue" ],
+      "phoneNumber" : [ "+4912345678" ],
       "dev" : [ "true" ],
-      "locale" : [ "en" ],
-      "origin" : [ "legacy-system1" ]
+      "origin" : [ "legacy-system1" ],
+      "favorite.color" : [ "blue" ],
+      "phoneNumberVerified" : [ "true" ],
+      "locale" : [ "en" ]
     },
     "credentials" : [ {
       "id" : "b74b49df-039b-4dfc-b103-4056562439f3",
@@ -1051,9 +1053,9 @@
     },
     "clientConsents" : [ {
       "clientId" : "app-frontend-plainjs",
-      "grantedClientScopes" : [ "email", "roles", "profile" ],
+      "grantedClientScopes" : [ "phone", "email", "roles", "profile" ],
       "createdDate" : 1594294729896,
-      "lastUpdatedDate" : 1594294729905
+      "lastUpdatedDate" : 1613493954866
     }, {
       "clientId" : "app-frontend-springboot",
       "grantedClientScopes" : [ "app-frontend-springboot", "email", "roles", "profile" ],
@@ -1268,7 +1270,7 @@
       "consentRequired" : false,
       "config" : { }
     } ],
-    "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
+    "defaultClientScopes" : [ "web-origins", "role_list", "profile", "roles", "email" ],
     "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "295177a8-1399-4fc7-9f0f-a5b537375104",
@@ -5155,9 +5157,11 @@
   "clientAuthenticationFlow" : "clients",
   "dockerAuthenticationFlow" : "docker auth",
   "attributes" : {
+    "clientOfflineSessionMaxLifespan" : "0",
     "clientSessionIdleTimeout" : "0",
-    "clientSessionMaxLifespan" : "0"
+    "clientSessionMaxLifespan" : "0",
+    "clientOfflineSessionIdleTimeout" : "0"
   },
-  "keycloakVersion" : "11.0.2",
+  "keycloakVersion" : "11.0.3",
   "userManagedAccessAllowed" : false
 }

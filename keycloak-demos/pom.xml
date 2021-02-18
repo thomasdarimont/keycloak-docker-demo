@@ -31,7 +31,9 @@
 
         <module>spring-boot-2-frontend-simple</module>
         <module>spring-boot-2-frontend-simple-stateless</module>
-        <module>spring-boot-23-backend-oauth2-springsec52</module>
+
+        <module>spring-boot-24-backend-only-resource-server</module>
+        <module>spring-boot-24-backend-service-resource-server</module>
     </modules>
 
     <dependencyManagement>
