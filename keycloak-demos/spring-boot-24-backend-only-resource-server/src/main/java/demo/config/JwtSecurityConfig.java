@@ -49,7 +49,7 @@ class JwtSecurityConfig {
     }
 
     /**
-     * Configures the token validator. Specifies two validation constraints:
+     * Configures the token validator. Specifies two additional validation constraints:
      * <p>
      * * Timestamp on the token is still valid
      * * The issuer is the expected entity

@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  */
 public class KeycloakGrantedAuthoritiesConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
-    private static final Converter<Jwt, Collection<GrantedAuthority>> JWT_SCOPE_GRANTENT_AUTHORITIES_CONVERTER = new JwtGrantedAuthoritiesConverter();
+    private static final Converter<Jwt, Collection<GrantedAuthority>> JWT_SCOPE_GRANTED_AUTHORITIES_CONVERTER = new JwtGrantedAuthoritiesConverter();
 
     private final String clientId;
 
@@ -42,7 +43,10 @@ public class KeycloakGrantedAuthoritiesConverter implements Converter<Jwt, Colle
                 getClientRolesFrom(jwt, clientId) //
         );
 
-        authorities.addAll(JWT_SCOPE_GRANTENT_AUTHORITIES_CONVERTER.convert(jwt));
+        Collection<GrantedAuthority> scopeAuthorities = JWT_SCOPE_GRANTED_AUTHORITIES_CONVERTER.convert(jwt);
+        if(!CollectionUtils.isEmpty(scopeAuthorities)) {
+            authorities.addAll(scopeAuthorities);
+        }
 
         return authorities;
     }

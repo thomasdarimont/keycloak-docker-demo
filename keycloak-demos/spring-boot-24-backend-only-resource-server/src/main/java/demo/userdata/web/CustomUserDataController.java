@@ -1,7 +1,7 @@
 package demo.userdata.web;
 
-import demo.userdata.KeycloakUserData;
-import demo.userdata.KeycloakUserDataService;
+import demo.userdata.CustomUserData;
+import demo.userdata.CustomUserDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/userdata")
 @RequiredArgsConstructor
-class KeycloakUserDataController {
+class CustomUserDataController {
 
-    private final KeycloakUserDataService keycloakUserDataService;
+    private final CustomUserDataService customUserDataService;
 
     @GetMapping("/current")
-    KeycloakUserData getDataForCurrentUser() {
-        return keycloakUserDataService.getDataForCurrentUser();
+    CustomUserData getDataForCurrentUser() {
+        return customUserDataService.getDataForCurrentUser();
     }
 
     @GetMapping("/{customerId}")
-    @PreAuthorize("hasRole('SERVICE')")
-    KeycloakUserData getDataForCurrentUser(@PathVariable String customerId) {
-        return keycloakUserDataService.getDataForCustomer(customerId);
+    @PreAuthorize("hasRole('ADMIN')")
+    CustomUserData getDataForCurrentUser(@PathVariable String customerId) {
+        return customUserDataService.getDataForCustomer(customerId);
     }
 }

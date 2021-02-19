@@ -11,8 +11,18 @@ spring:
         jwt:
           issuer-uri: ${springkeycloak.auth.jwt.issuerUri}
           jwk-set-uri: ${springkeycloak.auth.jwt.issuerUri}/protocol/openid-connect/certs
-# Use mock-service jwks-endpoint to obtain public key for testing
-#          jwk-set-uri: http://localhost:9999/jwks
+          # Use mock-service jwks-endpoint to obtain public key for testing
+          # jwk-set-uri: http://localhost:9999/jwks
+      client:
+        registration:
+          self:
+            provider: keycloak
+            clientId: ${springkeycloak.auth.jwt.clientId}
+            clientSecret: ${springkeycloak.auth.jwt.clientSecret}
+            authorizationGrantType: client_credentials
+        provider:
+          keycloak:
+            issuerUri: ${springkeycloak.auth.jwt.issuerUri}
 
 server:
   port: 30001
@@ -29,6 +39,7 @@ springkeycloak:
     jwt:
       issuerUri: http://sso.tdlabs.local:8899/u/auth/realms/acme
       clientId: app-backend-springboot-oauth2
+      clientSecret: c3903802-7ba5-47f8-ab78-9782b67f0be6
       allowedAudiences:
         - "app-backend-springboot-oauth2"
         - "app-cli"

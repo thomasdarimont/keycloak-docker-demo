@@ -87,6 +87,13 @@
       "containerId" : "acme",
       "attributes" : { }
     }, {
+      "id" : "0a0f090d-370a-437c-ad9a-c62d3b11a1b4",
+      "name" : "service",
+      "composite" : false,
+      "clientRole" : false,
+      "containerId" : "acme",
+      "attributes" : { }
+    }, {
       "id" : "031d90f4-84d6-4fa5-abe3-27ae0af4004d",
       "name" : "offline_access",
       "description" : "${role_offline-access}",
@@ -140,6 +147,7 @@
         "attributes" : { }
       } ],
       "app-helloworld" : [ ],
+      "quarkus-rest-service" : [ ],
       "app-backend-springboot" : [ {
         "id" : "1ce53a5c-9393-45e4-a75e-83ef1a446bff",
         "name" : "user",
@@ -952,7 +960,7 @@
     "credentials" : [ ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "uma_authorization", "offline_access" ],
+    "realmRoles" : [ "uma_authorization", "service", "offline_access" ],
     "clientRoles" : {
       "app-backend-springboot" : [ "user" ],
       "app-backend-springboot-oauth2" : [ "system", "user" ],
@@ -3447,6 +3455,46 @@
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "role_list", "profile", "roles", "email" ],
+    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+  }, {
+    "id" : "fe458563-585c-4119-9f0e-af40c8777cb1",
+    "clientId" : "quarkus-rest-service",
+    "surrogateAuthRequired" : false,
+    "enabled" : true,
+    "alwaysDisplayInConsole" : false,
+    "clientAuthenticatorType" : "client-secret",
+    "secret" : "17d81fca-d100-48a8-8e84-7cbf2253f3ec",
+    "redirectUris" : [ ],
+    "webOrigins" : [ ],
+    "notBefore" : 0,
+    "bearerOnly" : false,
+    "consentRequired" : false,
+    "standardFlowEnabled" : false,
+    "implicitFlowEnabled" : false,
+    "directAccessGrantsEnabled" : true,
+    "serviceAccountsEnabled" : false,
+    "publicClient" : false,
+    "frontchannelLogout" : false,
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "saml.assertion.signature" : "false",
+      "saml.multivalued.roles" : "false",
+      "saml.force.post.binding" : "false",
+      "saml.encrypt" : "false",
+      "saml.server.signature" : "false",
+      "saml.server.signature.keyinfo.ext" : "false",
+      "exclude.session.state.from.auth.response" : "false",
+      "saml_force_name_id_format" : "false",
+      "saml.client.signature" : "false",
+      "tls.client.certificate.bound.access.tokens" : "false",
+      "saml.authnstatement" : "false",
+      "display.on.consent.screen" : "false",
+      "saml.onetimeuse.condition" : "false"
+    },
+    "authenticationFlowBindingOverrides" : { },
+    "fullScopeAllowed" : true,
+    "nodeReRegistrationTimeout" : -1,
+    "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
     "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "b5bf99f6-3cf2-43dc-aaf3-cc3014282d67",

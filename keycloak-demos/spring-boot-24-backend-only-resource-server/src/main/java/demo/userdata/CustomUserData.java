@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class KeycloakUserData {
+public class CustomUserData {
 
     String userId;
 

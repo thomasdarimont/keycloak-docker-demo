@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-class DefaultKeycloakUserDataService implements KeycloakUserDataService {
+class DefaultCustomUserDataService implements CustomUserDataService {
 
     private final CurrentAccessTokenProvider currentAccessTokenProvider;
 
     @Override
     @PreAuthorize("hasPermission('self', 'customer', 'access')")
-    public KeycloakUserData getDataForCurrentUser() {
+    public CustomUserData getDataForCurrentUser() {
         var currentAccessToken = currentAccessTokenProvider.currentAccessToken();
 
         return getDataForCustomer(currentAccessToken.getSubject());
@@ -21,13 +21,13 @@ class DefaultKeycloakUserDataService implements KeycloakUserDataService {
 
     @Override
     @PreAuthorize("hasPermission(#customerId, 'customer', 'access')")
-    public KeycloakUserData getDataForCustomer(String customerId) {
+    public CustomUserData getDataForCustomer(String customerId) {
 
         var currentAccessToken = currentAccessTokenProvider.currentAccessToken();
 
         // for now we only reflect the data from the token, later we 'll fetch additional data from the actual datastore
 
-        var data = new KeycloakUserData();
+        var data = new CustomUserData();
         data.setUserId(customerId);
         data.setUsername(currentAccessToken.getClaimAsString("preferred_username"));
         data.setCustomerData("customerData:"+customerId);

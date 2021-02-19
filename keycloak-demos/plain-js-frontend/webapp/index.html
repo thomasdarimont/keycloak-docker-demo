@@ -1,18 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Plain JS Profile</title>
 
-    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <title>Keycloak JS Demo</title>
 
-    <script src="http://sso.tdlabs.local:8899/u/auth/js/keycloak.js"></script>
-    <script src="app.js"></script>
+    <style>
+        body {
+            background-color: #eaeaea;
+            font-family: sans-serif;
+            font-size: 30px;
+        }
+
+        button {
+            font-family: sans-serif;
+            font-size: 30px;
+            width: 250px;
+
+            background-color: #0085cf;
+            background-image: linear-gradient(to bottom, #00a8e1 0%, #0085cf 100%);
+            background-repeat: repeat-x;
+
+            border: 2px solid #ccc;
+            color: #fff;
+
+            text-transform: uppercase;
+
+            -webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+            box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        button:hover {
+            background-color: #006ba6;
+            background-image: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+
+        hr {
+            border: none;
+            background-color: #eee;
+            height: 10px;
+        }
+
+        .menu {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            padding: 10px;
+
+            -webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+            box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        .content .message {
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            font-size: 40px;
+        }
+
+        .response-content {
+            font-size: 20px;
+            padding: 5px;
+            white-space: pre;
+            text-transform: none;
+        }
+
+        .error {
+            color: #a21e22;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        tr.even {
+            background-color: #eee;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        td.label {
+            font-weight: bold;
+            width: 250px;
+        }
+    </style>
 </head>
 
-<body style="display: none;">
+<body>
 
-<div class="wrapper" id="welcome" style="display: none;">
+<nav class="menu" style="display: none;">
+    <button name="profileBtn" onclick="showProfile()">Profile</button>
+    <button name="tokenBtn" onclick="showToken()">AccessToken</button>
+    <button name="idTokenBtn" onclick="showIdToken()">IDToken</button>
+    <button onclick="showUserInfo()">UserInfo</button>
+    <button name="accountBtn" onclick="keycloak.accountManagement()">Account</button>
+    <button name="logoutBtn" onclick="keycloak.logout()">Logout</button>
+</nav>
+
+<div id="welcome" style="display: none;">
     <div class="menu">
         <button name="loginBtn" onclick="keycloak.login()">Login</button>
     </div>
@@ -22,15 +119,7 @@
     </div>
 </div>
 
-<div class="wrapper" id="profile" style="display: none;">
-    <div class="menu">
-        <button name="profileBtn" onclick="showProfile()">Profile</button>
-        <button name="tokenBtn" onclick="showToken()">AccessToken</button>
-        <button name="idTokenBtn" onclick="showIdToken()">IDToken</button>
-        <button name="accountBtn" onclick="keycloak.accountManagement()">Account</button>
-        <button name="logoutBtn" onclick="keycloak.logout()">Logout</button>
-    </div>
-
+<div id="profile" style="display: none;">
     <div class="content">
         <div id="profile-content" class="message">
             <table cellpadding="0" cellspacing="0">
@@ -42,10 +131,6 @@
                     <td class="label">Last name</td>
                     <td><span id="lastName"></span></td>
                 </tr>
-                <tr>
-                    <td class="label">Username</td>
-                    <td><span id="username"></span></td>
-                </tr>
                 <tr class="even">
                     <td class="label">Email</td>
                     <td><span id="email"></span></td>
@@ -55,34 +140,134 @@
     </div>
 </div>
 
-<div class="wrapper" id="token" style="display: none;">
-    <div class="menu">
-        <button onclick="showProfile()">Profile</button>
-        <button onclick="showToken()">AccessToken</button>
-        <button onclick="showIdToken()">IDToken</button>
-        <button onclick="keycloak.logout()">Logout</button>
-        <button onclick="keycloak.accountManagement()">Account</button>
-    </div>
-
+<div id="token" style="display: none;">
     <div class="content">
-        <div id="token-content" class="message"></div>
+        <div id="token-content" class="response-content"></div>
     </div>
 </div>
 
-<div class="wrapper" id="idToken" style="display: none;">
-    <div class="menu">
-        <button onclick="showProfile()">Profile</button>
-        <button onclick="showToken()">AccessToken</button>
-        <button onclick="showIdToken()">IDToken</button>
-        <button onclick="keycloak.logout()">Logout</button>
-        <button onclick="keycloak.accountManagement()">Account</button>
-    </div>
-
+<div id="idToken" style="display: none;">
     <div class="content">
-        <div id="token-content" class="message"></div>
+        <div id="idToken-content" class="response-content"></div>
     </div>
 </div>
 
+<div id="userinfo" style="display: none;">
+    <div class="content">
+        <div id="userinfo-content" class="response-content"></div>
+    </div>
+</div>
+
+<script>
+    let keycloakUrl = 'http://sso.tdlabs.local:8899/u/auth'
+    //let keycloakUrl = "http://localhost/auth"
+    let keycloakJsSrc = keycloakUrl + "/js/keycloak.js";
+
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = keycloakJsSrc;
+    document.getElementsByTagName('head')[0].appendChild(script);
+
+    window.onload = function () {
+
+        window.keycloak = new Keycloak({
+            url: keycloakUrl,
+            realm: 'acme',
+            clientId: 'app-frontend-plainjs',
+            scope: 'openid email phone'
+        });
+
+        // Workaround for KEYCLOAK-14414
+        window.keycloak._login = window.keycloak.login;
+        window.keycloak.login = function (options) {
+            if (options) {
+                //options.scope="openid email";
+                options.scope = "openid email phone";
+            }
+            return window.keycloak._login.apply(window.keycloak, [options]);
+        };
+
+
+        keycloak.init({
+            onLoad: 'login-required',
+            // onLoad: 'check-sso',
+            checkLoginIframe: true,
+            checkLoginIframeInterval: 1,
+            pkceMethod: 'S256'
+        }).success(function () {
+
+            if (keycloak.authenticated) {
+                showMenu();
+                showProfile();
+            } else {
+                showWelcome();
+            }
+        });
+
+        keycloak.onAuthLogout = showWelcome;
+    };
+
+    function showMenu() {
+        select('.menu').style.display = 'block';
+    }
+
+    function showWelcome() {
+        show('#welcome');
+    }
+
+    function showProfile() {
+
+        let firstname = keycloak.tokenParsed['given_name'];
+        let lastname = keycloak.tokenParsed['family_name'];
+        let email = keycloak.tokenParsed['email'];
+
+        if (firstname) {
+            select('#firstName').innerHTML = firstname;
+        }
+        if (lastname) {
+            select('#lastName').innerHTML = lastname;
+        }
+        if (email) {
+            select('#email').innerHTML = email;
+        }
+
+        show('#profile');
+    }
+
+    function showToken() {
+        select('#token-content').innerHTML = prettyPrintJson(keycloak.tokenParsed);
+        show('#token');
+    }
+
+    function showIdToken() {
+        select('#idToken-content').innerHTML = prettyPrintJson(keycloak.idTokenParsed);
+        show('#idToken');
+    }
+
+    function showUserInfo() {
+        keycloak.loadUserInfo().then(userinfo => {
+            select('#userinfo-content').innerHTML = prettyPrintJson(userinfo);
+            show('#userinfo');
+        });
+    }
+
+    function prettyPrintJson(obj) {
+        return JSON.stringify(obj, null, '    ');
+    }
+
+    function show(selector) {
+        select('#welcome').style.display = 'none';
+        select('#profile').style.display = 'none';
+        select('#token').style.display = 'none';
+        select('#idToken').style.display = 'none';
+        select('#userinfo').style.display = 'none';
+        select(selector).style.display = 'block';
+    }
+
+    function select(selector) {
+        return document.querySelector(selector);
+    }
+</script>
 </body>
 
 </html>
