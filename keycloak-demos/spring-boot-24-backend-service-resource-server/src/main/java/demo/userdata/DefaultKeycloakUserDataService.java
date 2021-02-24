@@ -30,6 +30,7 @@ class DefaultKeycloakUserDataService implements KeycloakUserDataService {
         var data = new KeycloakUserData();
         data.setUserId(customerId);
         data.setUsername(currentAccessToken.getClaimAsString("preferred_username"));
+        data.setCustomerData("customerData:"+customerId);
 
         return data;
     }

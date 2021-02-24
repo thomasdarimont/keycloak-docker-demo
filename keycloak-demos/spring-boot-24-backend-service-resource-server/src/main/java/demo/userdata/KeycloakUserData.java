@@ -10,4 +10,6 @@ public class KeycloakUserData {
     String userId;
 
     String username;
+
+    String customerData;
 }
