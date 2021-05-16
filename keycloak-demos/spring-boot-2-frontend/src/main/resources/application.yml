@@ -12,13 +12,13 @@ keycloak:
   # This allows us to pull the Keycloak configuration from here instead of keycloak.json
   enabled: false
 
-  realm: acme
-  auth-server-url: http://sso.tdlabs.local:8899/u/auth
+  realm: ${KEYCLOAK_REALM:acme}
+  auth-server-url: ${KEYCLOAK_URL:http://sso.tdlabs.local:8899/u/auth}
   # The client-id
-  resource: app-frontend-springboot
+  resource: ${KEYCLOAK_CLIENT_ID:app-frontend-springboot}
   # Client Credentials required, since we are a "Confidential Client"
   credentials:
-     secret: 4822a740-20b9-4ff7-bbed-e664f4a70eb6
+     secret: ${KEYCLOAK_CLIENT_SECRET:4822a740-20b9-4ff7-bbed-e664f4a70eb6}
   ssl-required: external
   principal-attribute: preferred_username
   use-resource-role-mappings: true
@@ -31,4 +31,4 @@ keycloak:
 
 
 todo-backend:
-  server: http://apps.tdlabs.local:20000
+  server: ${TODO_BACKEND_URL:http://apps.tdlabs.local:20000}
